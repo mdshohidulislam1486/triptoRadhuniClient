@@ -10,6 +10,7 @@ import Login from './pages/Login/Login/Login';
 import { SnackbarProvider } from 'notistack';
 import Register from './pages/Login/Register/Register';
 import CartScreen from './pages/Cart/Cart';
+import PriavateRoute from './pages/Login/PrivateRoute/PrivateRoute';
 
 function App() {
   /* useEffect(()=>{
@@ -20,8 +21,9 @@ function App() {
   }, []) */
   return (
     <SnackbarProvider anchorOrigin={{vertical:'top', horizontal:'center'}}>
-    <StoreProvider>
+    
       <AuthProvider>
+      <StoreProvider>
         <BrowserRouter>
           <Routes>
             <Route index element={<Home />} />
@@ -29,15 +31,15 @@ function App() {
             <Route path='/addproduct' element={<AddProducts />} />
             <Route path='/about' element={<About></About>} />
             <Route path='/login' element={<Login/>} />
-            <Route path='/cart' element={<CartScreen/>} />
+            <Route path='cart' element={<PriavateRoute><CartScreen></CartScreen></PriavateRoute>}></Route>
             <Route path='/register' element={<Register/>} />
-            
             <Route path='/productDetails/:_id' element={<ProductDetails />} />
             <Route path="*" element={<Home />}/>    
           </Routes>
         </BrowserRouter>
+        </StoreProvider>
      </AuthProvider>
-     </StoreProvider>
+     
      </SnackbarProvider>
  
   );

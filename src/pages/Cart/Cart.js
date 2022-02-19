@@ -8,6 +8,7 @@ import { Store } from '../utilities/Store';
 const CartScreen = () => {
     const {state, dispatch} = useContext(Store)
     const  { cart: {cartItems}} = state;
+
     
 
     const updateCartHandler = async (item, quantity) => {

@@ -10,8 +10,11 @@ const Register = () => {
     const [loaginData, setLogingData] = useState({})
     const history  = useNavigate()
 
+    
     const {user, registerUser, isLoading, authError} = useAuth()
-
+    if(user.email){
+        history('/')
+    }
     const handleOnBlur = e =>{
         const field = e.target.name;
         const value = e.target.value;

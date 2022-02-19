@@ -8,11 +8,12 @@ import Layout from '../../Shared/Layout';
 
 const Login = () => {
 
+
     const [loaginData, setLogingData] = useState({})
     const {user, loginUser, isLoading, authError,  signInwithGoogle} = useAuth()
     const location = useLocation()
     const history  = useNavigate()
-
+    
     const handleOnChange = e =>{
         const field = e.target.name;
         const value = e.target.value;
@@ -20,16 +21,18 @@ const Login = () => {
         newLoginData[field] =value;
         setLogingData(newLoginData)
 
-        console.log(loaginData)
 
     }
+   
     const handleLoginSubmit =e=>{
         loginUser(loaginData.email, loaginData.password, location, history)
+        if(user.location)
         e.preventDefault()
     }
     const handleGoogleSignIn=()=>{
         signInwithGoogle(location, history)
     }
+    
     return (
         <Layout>
             <Container sx={{mt:5, minHeight:"100vh"}}>
