@@ -1,10 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, updateProfile, getIdToken  } from "firebase/auth";
 import initilizeFirebase from "../Login/firebase/firebase.init";
+import { Store } from '../utilities/Store';
+import Cookies from "js-cookie";
 
 
 
 // initilizeFirebase app 
+
 initilizeFirebase();
 const useFirebase = ()=>{
     const [user, setUser] =useState({})
@@ -12,14 +15,14 @@ const useFirebase = ()=>{
     const [authError, setauthError] = useState('')
     const [admin, setAdmin] = useState(false)
     const [token, setToken] = useState('')
-
+    
 
     const googleProvider = new GoogleAuthProvider()
 
     const auth = getAuth()
 
     const registerUser = (email, password, name, history)=>{
-
+        
         setIsLoading(true);
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -55,7 +58,7 @@ const useFirebase = ()=>{
               setauthError('Invalid user name or password');
             })
             .finally(()=>setIsLoading(false));
-    }
+    } 
 
     const signInwithGoogle =(location, history)=>{
           setIsLoading(true)
@@ -92,7 +95,7 @@ const useFirebase = ()=>{
     }, [])
 
     useEffect(()=>{
-      fetch(`http://localhost:5000/${user?.email}`)
+      fetch(`http://localhost:5000/users/${user?.email}`)
       .then(res => res.json())
       .then(data => setAdmin(data?.admin))
 
@@ -100,12 +103,15 @@ const useFirebase = ()=>{
 
     const logOut =()=>{
         setIsLoading(true)
+        
         signOut(auth).then(() => {
         // Sign-out successful.
+      
         }).catch((error) => {
         // An error happened.
         })
         .finally(()=>setIsLoading(false));
+        
     }
 
   const saveUser =(email, displayName, method)=>{

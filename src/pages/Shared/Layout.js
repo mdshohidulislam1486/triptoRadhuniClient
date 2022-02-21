@@ -12,8 +12,10 @@ import MailIcon from '@mui/icons-material/Mail';
 import useAuth from '../hooks/useAuth';
 
 
+
 const Layout = ({children, title, description}) => {
 const {state, dispatch} = useContext(Store)
+const {admin} = useAuth()
 const {darkMode, cart} =state
 const navTheme = useTheme()
 const classes = useStyles()
@@ -96,8 +98,14 @@ const theme = createTheme({
                 </List>
                 </Box>
             );
+    const handleLogOut = () =>{
+        logOut() 
+        dispatch({type:'USER_LOGOUT'})
+        Cookies.remove('userInfo')
+        Cookies.remove('cartItems')
+    }
     return (
-        <Box>
+        <>
             <head>
                 <title>{title? `${title} - Tripto Radhuni`: 'Tripto Radhuni'} </title>
                 {description && <meta name='descripton' content={description}> </meta>}
@@ -116,8 +124,9 @@ const theme = createTheme({
                             aria-label="menu"
                             sx={{ mr: 2 }}
                             className={navIcon}
+                            onClick={()=> setState(true)}
                         >
-                        <MenuIcon onClick={()=> setState(true)} className={navIcon}/>
+                        <MenuIcon className={navIcon}/>
                         </IconButton >
                         
                        
@@ -127,12 +136,12 @@ const theme = createTheme({
                     <Box className={navItems}>
                         <Switch checked={darkMode}onChange={darkModeHandler}></Switch>
                         <Link to='/' style={{textDecoration:'none'}}><Button color='inherit'>Home</Button></Link>
-                        <Link to='/addproduct' style={{textDecoration:'none'}}><Button color='inherit'>Add Product</Button></Link>
+                       { admin && <Link to='/dashboard/productlist' style={{textDecoration:'none'}}><Button color='inherit'>Admin Panel</Button></Link>}
                         <Link to='/cart' style={{textDecoration:'none'}}><Button color='inherit'>
                         {cart.cartItems?.length > 0 ? <Badge badgeContent={cart.cartItems?.length}>Cart</Badge> : 'Cart'}    
                         </Button></Link>
                         
-                        {user?.email ? <Button onClick={logOut}>Logout</Button>:
+                        {user?.email ? <Button onClick={()=> handleLogOut()}>Logout</Button>:
                         <Link to='/login'><Button color="inherit">Login</Button></Link>}
                     </Box>
                     </AppBar>
@@ -158,7 +167,7 @@ const theme = createTheme({
                 </React.Fragment>
             </Box>
             
-        </Box>
+        </>
     );
 };
 

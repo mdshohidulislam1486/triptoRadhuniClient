@@ -90,9 +90,11 @@ const CartScreen = () => {
                                     Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{''} items)
                                     : $ {cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}
                             </ListItem>
+                            <Link to='/shipping' style={{textDecoration:'none'}}>
                             <ListItem>
                                 <Button fullWidth variant='contained' color='primary'> Check Out</Button>
                             </ListItem>
+                            </Link>
                        </List>
 
                    </Card>

@@ -11,6 +11,11 @@ import { SnackbarProvider } from 'notistack';
 import Register from './pages/Login/Register/Register';
 import CartScreen from './pages/Cart/Cart';
 import PriavateRoute from './pages/Login/PrivateRoute/PrivateRoute';
+import DashboardHome from './pages/Dashboard/DashboardHome';
+import MakeAdmin from './pages/Dashboard/MakeAdmin';
+import ProductList from './pages/Dashboard/ProductList';
+import AdminPrivateRoute from './pages/Login/PrivateRoute/AdminPrivateRoute';
+import Shipping from './pages/Shipping/Shipping';
 
 function App() {
   /* useEffect(()=>{
@@ -21,9 +26,9 @@ function App() {
   }, []) */
   return (
     <SnackbarProvider anchorOrigin={{vertical:'top', horizontal:'center'}}>
-    
-      <AuthProvider>
+      
       <StoreProvider>
+      <AuthProvider>
         <BrowserRouter>
           <Routes>
             <Route index element={<Home />} />
@@ -31,14 +36,20 @@ function App() {
             <Route path='/addproduct' element={<AddProducts />} />
             <Route path='/about' element={<About></About>} />
             <Route path='/login' element={<Login/>} />
-            <Route path='cart' element={<PriavateRoute><CartScreen></CartScreen></PriavateRoute>}></Route>
+            <Route path='/cart' element={<CartScreen/>} />
+            <Route path='/dashboard' element={<AdminPrivateRoute><DashboardHome/></AdminPrivateRoute>}>
+              <Route path='makeadmin' element={<MakeAdmin/>}/>
+              <Route path='productlist' element={<ProductList/>}/>
+            </Route>
+            
+            <Route path='shipping' element={<PriavateRoute><Shipping/></PriavateRoute>}></Route>
             <Route path='/register' element={<Register/>} />
             <Route path='/productDetails/:_id' element={<ProductDetails />} />
             <Route path="*" element={<Home />}/>    
           </Routes>
         </BrowserRouter>
+        </AuthProvider>
         </StoreProvider>
-     </AuthProvider>
      
      </SnackbarProvider>
  

@@ -61,7 +61,7 @@ const ProductDetails = () => {
     return (
         <>
           <Layout title={newProduct?.name}>
-            <Box className={classes.section}>
+            <Box className={classes.section} key={newProduct?._id}>
                 <Link style={{textDecoration:'none'}} to='/'>
                     Back to home
                 </Link>
@@ -107,7 +107,8 @@ const ProductDetails = () => {
                 
                 <Box sx={{mt:8, display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
                         {relvantItem?.map((product) => (
-                            <Card sx={{ display: 'flex', m:2 }}>
+                            
+                            <Card sx={{ display: 'flex', m:2 }}  key={product.key}>
                                
                                <CardActionArea onClick={()=>productChangeHandler(product._id)}>
                                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>

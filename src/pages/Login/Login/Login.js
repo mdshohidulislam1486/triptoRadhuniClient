@@ -13,7 +13,9 @@ const Login = () => {
     const {user, loginUser, isLoading, authError,  signInwithGoogle} = useAuth()
     const location = useLocation()
     const history  = useNavigate()
-    
+    if(user.email){
+        history('/')
+    }
     const handleOnChange = e =>{
         const field = e.target.name;
         const value = e.target.value;
@@ -23,10 +25,9 @@ const Login = () => {
 
 
     }
-   
+    
     const handleLoginSubmit =e=>{
         loginUser(loaginData.email, loaginData.password, location, history)
-        if(user.location)
         e.preventDefault()
     }
     const handleGoogleSignIn=()=>{
