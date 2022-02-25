@@ -10,6 +10,7 @@ import { makeStyles } from '@mui/styles';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import useAuth from '../hooks/useAuth';
+import axios from 'axios';
 
 
 
@@ -98,12 +99,24 @@ const theme = createTheme({
                 </List>
                 </Box>
             );
-    const handleLogOut = async() =>{
+    const {
+                cart: { shippingAddress },
+              } = state;
         
+    const handleLogOut = async() =>{
+        axios.put('http://localhost:5000/shippingaddress', shippingAddress )
+        .then(res =>{
+            if(res?.data?.insertedId){
+                alert('Shipping Address addeded')
+            }
+        })
+
         logOut() 
         dispatch({type:'USER_LOGOUT'})
         Cookies?.remove('userInfo')
         Cookies?.remove('cartItems')
+        Cookies?.remove('shippingAddress')
+        Cookies?.remove('paymentMethod')
     }
     return (
         <>

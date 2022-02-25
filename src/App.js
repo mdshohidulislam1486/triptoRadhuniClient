@@ -47,8 +47,7 @@ function App() {
             <Route path='/placeorder' element={<PriavateRoute><PlaceOrder/></PriavateRoute>}></Route>
             <Route path='/payment' element={<PriavateRoute><Payment/></PriavateRoute>}></Route>
             <Route path='/register' element={<Register/>} />
-            <Route path='/productDetails/:_id' element={<ProductDetails />} />
-            <Route path="*" element={<Home />}/>    
+            <Route path='/productDetails/:_id' element={<ProductDetails />} />    
           </Routes>
         </BrowserRouter>
         </AuthProvider>

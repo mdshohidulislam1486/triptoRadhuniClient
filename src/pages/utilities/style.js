@@ -20,7 +20,7 @@ const useStyles = makeStyles({
         marginTop:'5em'
     },
     section:{
-        marginTop:'1em',
+        marginTop:'2em',
         marginBottom:'1em',
     },
     addProduct:{
@@ -33,7 +33,8 @@ const useStyles = makeStyles({
     },
     chekOut:{
         backgroundColor:'transparent'
-    }
+    },
+  
 })
 
 export default useStyles;

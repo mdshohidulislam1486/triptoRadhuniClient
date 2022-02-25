@@ -1,5 +1,5 @@
 
-/* const firebaseConfig = {
+const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
     authDomain: process.env.REACT_APP_AUTH_DOMAIN,
     projectId: process.env.REACT_APP_PROJECT_ID,
@@ -8,15 +8,5 @@
     appId: process.env.REACT_APP_APP_ID,
 };
 export default firebaseConfig;
- */
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAfgUHbkhaWP0ztmIUbw2z2vMZ7qzy3dWM",
-  authDomain: "tripto-radhuni.firebaseapp.com",
-  projectId: "tripto-radhuni",
-  storageBucket: "tripto-radhuni.appspot.com",
-  messagingSenderId: "1088564563001",
-  appId: "1:1088564563001:web:eaf376074055c0fe34d1e8"
-};
 
-export default firebaseConfig;
