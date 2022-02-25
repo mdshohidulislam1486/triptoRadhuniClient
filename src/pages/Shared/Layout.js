@@ -98,11 +98,12 @@ const theme = createTheme({
                 </List>
                 </Box>
             );
-    const handleLogOut = () =>{
+    const handleLogOut = async() =>{
+        
         logOut() 
         dispatch({type:'USER_LOGOUT'})
-        Cookies.remove('userInfo')
-        Cookies.remove('cartItems')
+        Cookies?.remove('userInfo')
+        Cookies?.remove('cartItems')
     }
     return (
         <>

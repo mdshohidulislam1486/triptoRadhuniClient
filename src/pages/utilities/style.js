@@ -30,6 +30,9 @@ const useStyles = makeStyles({
             borderRadius:3,
 
         }
+    },
+    chekOut:{
+        backgroundColor:'transparent'
     }
 })
 

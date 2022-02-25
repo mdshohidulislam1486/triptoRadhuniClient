@@ -8,9 +8,10 @@ import useStyles from '../utilities/style';
 import { Store } from '../utilities/Store';
 import Cookies from 'js-cookie';
 import useAuth from '../hooks/useAuth';
+import CheckOutWizard from '../utilities/CheckOutWizard';
 
 const Shipping = () => {
-
+    const navigate = useNavigate()
     const {user} = useAuth()
     const {state, dispatch} = useContext(Store)
     const {
@@ -18,6 +19,9 @@ const Shipping = () => {
       } = state;
 
       useEffect(() =>{
+        if(!user.email){
+            navigate('/login')
+        }
         setValue('fullName', user.name);
         setValue('email', user.email);
         setValue('address', shippingAddress.address);
@@ -34,26 +38,28 @@ const Shipping = () => {
                 payload:{data}
             })
             Cookies.set( 'shippingAddress', JSON.stringify({data}) )
-            if(res.data.insertedId){
+            if(res?.data?.insertedId){
                 alert('Shipping Address addeded')
             }
         })
-        reset()
-
+        navigate('/payment')
+        
     };
     const classes = useStyles()
 
    
     return (
         <Layout>
-            <Typography>This is the shipping page </Typography>
+            <CheckOutWizard activeStep={1}/>
+            
             <form onSubmit={handleSubmit(onSubmit)} >
                     <List className={classes.addProduct} sx={{display:'flex', flexWrap:'wrap'}}>
+                        <Typography variant='h3' sx={{my:5}}>Shipping Address</Typography>
                         <ListItem>
                             <Controller
                             name="name"
                             control={control}
-                            defaultValue={user.displayName}
+                            defaultValue={user?.displayName}
                             rules={{
                                 required: true,
                                 minLength: 2,
