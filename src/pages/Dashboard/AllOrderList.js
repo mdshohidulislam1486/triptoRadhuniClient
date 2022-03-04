@@ -76,7 +76,7 @@ import { List, ListItem, Tab } from '@mui/material';
 const AllOrderList = () => {
     const [ordersList, setOrdrsList] = useState([])
     const [newProduct, setNewProduct] =useState([])
-
+    
   
     
 
@@ -97,9 +97,23 @@ const AllOrderList = () => {
     setNewProduct(newId)
       setOpen(true);
     } 
-
     const handleClose = () => setOpen(false);
-  
+
+
+    const [confirm, setConfirm] = useState(false)
+
+    
+ 
+    const handleConfirm =(id)=> {
+      const newId = ordersList.find((a) => a._id === id)
+      setConfirm(newId)
+      
+    }
+    useEffect(()=>{
+      const newId = [{...confirm}]
+      setConfirm(newId)
+    },[])
+
 
 
     return (
@@ -131,7 +145,13 @@ const AllOrderList = () => {
                     <TableCell>{orderList?.shippingAddress?.phone}</TableCell> 
                     <TableCell>{orderList?.shippingAddress?.address} {orderList?.shippingAddress?.city} </TableCell> 
                     <TableCell sx={{cursor:'pointer', color:'#0000FF'}} onClick={()=>handleOpen(orderList._id)}>Product details</TableCell>
-                  </TableRow>
+                    <TableCell>{orderList?._id}</TableCell> 
+                    <TableCell>{new Date(orderList?.createdAt).toLocaleString()}</TableCell> 
+                    <TableCell>{orderList?.taxPrice} & {orderList?.shippingPrice? orderList?.shippingPrice : 0} & {orderList.itemsPrice}</TableCell> 
+                    <TableCell>{orderList?.totalPrice}</TableCell> 
+                    <TableCell onClick={()=>handleConfirm(orderList._id)}>{confirm._id === orderList._id && orderList?.confirmed === true?  'Confirmed' :'Not Confirmed'}</TableCell> 
+
+                </TableRow>
                 </TableBody>)}
               </Table>
             </TableContainer>
