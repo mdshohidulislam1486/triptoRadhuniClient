@@ -66,7 +66,7 @@ const DashboardHome = () => {
                         </ListItemText>
                     </ListItem>
                     </Link>}
-                    <Link to='/dashboard/productlist' style={{textDecoration:'none'}}>
+                    <Link to='/dashboard/allOrderList' style={{textDecoration:'none'}}>
                     <ListItem button>
                         <ListItemIcon>
                             <InboxIcon />

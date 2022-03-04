@@ -27,10 +27,14 @@ const PlaceOrder = () => {
         if(!paymentMethod){
             navigate('/payment')
         }
+        if(cartItems.length === 0 ){
+            navigate('/cart')
+        }
     })
     const {closeSnackbar, enqueueSnackbar} = useSnackbar()
     const [loading, setLoading] = useState(false)
     const placeOrderHandler = async() =>{
+        
         closeSnackbar();
         try{
             setLoading(true)
@@ -48,13 +52,14 @@ const PlaceOrder = () => {
             dispatch({type:'CART_CLEAR'});
             Cookies.remove('cartItems');
             setLoading(false)
-            navigate(`/order/${data._id}`)
+            navigate(`/order/${data?._id}`)
+            console.log(data._id)
         }catch(err){
           setLoading(false)
           enqueueSnackbar(getError(err), {variant:'error'})  
         }
     }
-     
+  
     return (
         <Layout>
             <CheckOutWizard activeStep={3}></CheckOutWizard>

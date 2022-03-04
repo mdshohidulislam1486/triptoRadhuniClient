@@ -18,6 +18,7 @@ import AdminPrivateRoute from './pages/Login/PrivateRoute/AdminPrivateRoute';
 import Shipping from './pages/Shipping/Shipping';
 import Payment from './pages/Payment/Payment';
 import PlaceOrder from './pages/PlaceOrder/PlaceOrder';
+import AllOrderList from './pages/Dashboard/AllOrderList';
 
 function App() {
   /* useEffect(()=>{
@@ -35,13 +36,15 @@ function App() {
           <Routes>
             <Route index element={<Home />} />
             <Route path="/" element={<Home />}/>
-            <Route path='/addproduct' element={<AddProducts />} />
+            <Route path="*" element={<Home />}/>
+            <Route path='/addproduct' element={<AdminPrivateRoute><AddProducts/></AdminPrivateRoute>} />
             <Route path='/about' element={<About></About>} />
             <Route path='/login' element={<Login/>} />
             <Route path='/cart' element={<CartScreen/>} />
             <Route path='/dashboard' element={<AdminPrivateRoute><DashboardHome/></AdminPrivateRoute>}>
               <Route path='makeadmin' element={<MakeAdmin/>}/>
               <Route path='productlist' element={<ProductList/>}/>
+              <Route path='allOrderList' element={<AllOrderList/>}/>
             </Route>
             <Route path='/shipping' element={<PriavateRoute><Shipping/></PriavateRoute>}></Route>
             <Route path='/placeorder' element={<PriavateRoute><PlaceOrder/></PriavateRoute>}></Route>
