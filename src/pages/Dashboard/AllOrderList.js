@@ -75,6 +75,10 @@ import { List, ListItem, Tab } from '@mui/material';
 
 const AllOrderList = () => {
     const [ordersList, setOrdrsList] = useState([])
+    const [newProduct, setNewProduct] =useState([])
+
+  
+    
 
 
     useEffect(()=>{
@@ -85,7 +89,15 @@ const AllOrderList = () => {
 
     // Modal 
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
+
+  
+
+    const handleOpen = (id) =>{
+    const newId = ordersList.find((a) => a._id === id)
+    setNewProduct(newId)
+      setOpen(true);
+    } 
+
     const handleClose = () => setOpen(false);
   
 
@@ -118,15 +130,16 @@ const AllOrderList = () => {
                     <TableCell>{orderList?.shippingAddress?.name}</TableCell> 
                     <TableCell>{orderList?.shippingAddress?.phone}</TableCell> 
                     <TableCell>{orderList?.shippingAddress?.address} {orderList?.shippingAddress?.city} </TableCell> 
-                    <TableCell sx={{cursor:'pointer', color:'#0000FF'}} onClick={handleOpen}>Product details</TableCell>
+                    <TableCell sx={{cursor:'pointer', color:'#0000FF'}} onClick={()=>handleOpen(orderList._id)}>Product details</TableCell>
                   </TableRow>
                 </TableBody>)}
               </Table>
             </TableContainer>
             </Box>
             <div>
-               {ordersList.map((orderList) =>  <Modal
-                  key={orderList._id}
+          
+                <Modal
+                
                   aria-labelledby="spring-modal-title"
                   aria-describedby="spring-modal-description"
                   open={open}
@@ -137,8 +150,9 @@ const AllOrderList = () => {
                     timeout: 500,
                   }}
                 >
-                  <Fade in={open}>
-                    <Box sx={style}>
+                 
+                  <Fade in={open} >
+                    <Box sx={style} >
                       <Typography id="spring-modal-title" variant="h6" component="h2">
                         Please find the Details of the product need to Delivered
                       </Typography>
@@ -153,23 +167,24 @@ const AllOrderList = () => {
                                  <TableCell>Quantity</TableCell>
                              </TableRow>
                            </TableHead>
-                           {orderList.orderItems.map((newRow) =>
-                           <TableBody  key={newRow?.name}>
-                             <TableRow>
-                              <TableCell>{newRow?.name}</TableCell>
-                              <TableCell><img width={20} src={newRow?.image} alt={newRow?.name} /></TableCell>
-                              <TableCell>{newRow?.price}</TableCell>
-                              <TableCell>{newRow?.quantity}</TableCell>
-                            </TableRow>
-                          </TableBody>
-                             )}
-                           
+                           <TableBody>
+                            
+                             {newProduct.orderItems?.map((a) => <TableRow key={a._id}>
+                              <TableCell>{a?.name}</TableCell>
+                              <TableCell><img width={30} src={a.image} alt={a.name} /></TableCell>
+                              <TableCell>{a.price}</TableCell>
+                              <TableCell>{a.quantity}</TableCell>
+                            </TableRow>)}
+                         
+                           </TableBody>
                          </Table>
                        </TableContainer>
                       </Box>
                     </Box>
+                   
                   </Fade>
-                </Modal>)}
+                </Modal>
+       
             </div>
         </div>
     );
