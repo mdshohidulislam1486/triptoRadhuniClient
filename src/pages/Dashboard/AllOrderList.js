@@ -27,6 +27,7 @@ import Button from '@mui/material/Button';
 // web.cjs is required for IE11 support
 import { animated, useSpring} from 'react-spring'
 import { List, ListItem, Tab } from '@mui/material';
+import axios from 'axios';
 
     const Fade = React.forwardRef(function Fade(props, ref) {
       const { in: open, children, onEnter, onExited, ...other } = props;
@@ -82,7 +83,7 @@ const AllOrderList = () => {
 
 
     useEffect(()=>{
-      fetch('http://localhost:5000/orderslist')
+      fetch('https://powerful-meadow-17770.herokuapp.com/orderslist')
       .then(res => res.json())
       .then(data => setOrdrsList(data))
     }, [])
@@ -99,20 +100,37 @@ const AllOrderList = () => {
     } 
     const handleClose = () => setOpen(false);
 
-
-    const [confirm, setConfirm] = useState(false)
-
     
- 
-    const handleConfirm =(id)=> {
-      const newId = ordersList.find((a) => a._id === id)
-      setConfirm(newId)
+    const [confirm, setConfirm] = useState('')
+    const [newConfirmId, setNewConfirmId] = useState(false)
+   
+
+    useEffect(()=>{
+      
+    },[])
+    
+    const handleConfirm = (id)=> {
+      
+      const url =   `https://powerful-meadow-17770.herokuapp.com/orderslist/${id}`
+      
+      fetch(url, {
+        method:'PUT',
+        headers:{
+          'content-type':'application/json'
+        },
+        body: JSON.stringify()
+      })
       
     }
-    useEffect(()=>{
-      const newId = [{...confirm}]
-      setConfirm(newId)
-    },[])
+   
+    useEffect(() => {
+      const newId = ordersList.find((a) => a._id === confirm)
+      fetch(`https://powerful-meadow-17770.herokuapp.com/${newId}}`)
+      .then(res => res.json())
+      .then(newId => setNewConfirmId(newId))
+      
+
+    }, [])
 
 
 
@@ -147,9 +165,9 @@ const AllOrderList = () => {
                     <TableCell sx={{cursor:'pointer', color:'#0000FF'}} onClick={()=>handleOpen(orderList._id)}>Product details</TableCell>
                     <TableCell>{orderList?._id}</TableCell> 
                     <TableCell>{new Date(orderList?.createdAt).toLocaleString()}</TableCell> 
-                    <TableCell>{orderList?.taxPrice} & {orderList?.shippingPrice? orderList?.shippingPrice : 0} & {orderList.itemsPrice}</TableCell> 
-                    <TableCell>{orderList?.totalPrice}</TableCell> 
-                    <TableCell onClick={()=>handleConfirm(orderList._id)}>{confirm._id === orderList._id && orderList?.confirmed === true?  'Confirmed' :'Not Confirmed'}</TableCell> 
+                    <TableCell>$ {orderList?.taxPrice} & $ {orderList?.shippingPrice? orderList?.shippingPrice : 0} & ${orderList.itemsPrice}</TableCell> 
+                    <TableCell color='primary'><strong>$ {orderList?.totalPrice}</strong></TableCell> 
+                    <TableCell onClick={()=>handleConfirm(orderList._id)}>{newConfirmId?  'Confirmed' :'Not Confirmed'}</TableCell> 
 
                 </TableRow>
                 </TableBody>)}

@@ -38,7 +38,7 @@ const PlaceOrder = () => {
         closeSnackbar();
         try{
             setLoading(true)
-            const {data} = await axios.post('http:/localhost:5000/placeOrder', {
+            const {data} = await axios.post('https://powerful-meadow-17770.herokuapp.com/placeOrder', {
                 orderItems: cartItems,
                 shippingAddress,
                 paymentMethod,

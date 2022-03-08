@@ -9,7 +9,7 @@ import Layout from '../Shared/Layout';
 const AddProducts = () => {
     const {register, handleSubmit, reset, control, formState:{errors} } = useForm();
     const onSubmit = data =>{
-        axios.post('http://localhost:5000/products', data)
+        axios.post('https://powerful-meadow-17770.herokuapp.com/products', data)
         .then(res =>{
             if(res.data.insertedId){
                 alert('Product Successfully addeded')

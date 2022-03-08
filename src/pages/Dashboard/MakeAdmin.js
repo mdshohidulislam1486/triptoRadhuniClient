@@ -14,7 +14,7 @@ const MakeAdmin = () => {
     const handleMakeAdmin = e=> {
         const user = {email}
         
-        fetch('http://localhost:5000/users/admin', {
+        fetch('https://powerful-meadow-17770.herokuapp.com/users/admin', {
             method:'PUT',
             headers:{
                 'content-type': 'application/json'
@@ -28,18 +28,26 @@ const MakeAdmin = () => {
                 setAddAdmin(true)
             }
         })
+       
         e.preventDefault()
 
     }
 
     
     return (
-       <Box>
-            <Typography>Make a new admin/moderator</Typography>
+       <Box sx={{display:'flex',flexDirection:'column', justifyContent:'center', alignContent:'center'}}>
+            <Box sx={{width:'75%'}}>
+            <Typography variant='h4' sx={{fontWeight:'600'}} >Make a new admin/moderator</Typography>
+            <Typography variant='body1'>Please make sure you are 100% ready to add this person as a admin of your website, the admin can add another admin and also he will get authority to eidit and delete data form your website, he can also see all the user orders and cancell or delete order if needed</Typography>
+            </Box>
             <form onSubmit={handleMakeAdmin}>
-            <TextField  label="Enter your email" type='text' 
+           <Box sx={{mt:5}}> 
+           <TextField  label="Enter your email" type='text' 
             onBlur={handleOnBlur} />
+            <br/>
+            <br/>
             <Button variant='contained' type='submit'>Make A admin</Button>
+           </Box>
             </form>
             {addAdmin && <Alert severity='success'>Admin Added Successfully</Alert>}
        </Box>

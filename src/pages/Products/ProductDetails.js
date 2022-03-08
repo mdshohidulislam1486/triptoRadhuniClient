@@ -19,7 +19,7 @@ const ProductDetails = () => {
   
     
     useEffect(()=>{
-      fetch('http://localhost:5000/products')
+      fetch('https://powerful-meadow-17770.herokuapp.com/products')
       .then(res => res.json())
       .then(data => setProducts(data))
     } ,[])
@@ -45,7 +45,7 @@ const ProductDetails = () => {
     const classes = useStyles()
    
     const addToCartHandler = async () =>{
-    const {data} = await axios.get(`http://localhost:5000/products/${_id}`)  
+    const {data} = await axios.get(`https://powerful-meadow-17770.herokuapp.com/products/${_id}`)  
     const existItem = state.cart.cartItems.find(x => x._id === data._id)
     const quantity = existItem? existItem.quantity + 1 : 1
     if(data.countInStock < quantity){
@@ -68,7 +68,9 @@ const ProductDetails = () => {
             </Box>
             <Grid container spacing={1}>
                 <Grid item md={6} xs={12}>
-                    <img src={newProduct?.image} alt={newProduct?.name} width={440} height={440}/>
+                    <Box sx={{maxWidth:440, maxHeight:440}}>
+                    <img src={newProduct?.image} alt={newProduct?.name} width='100%' height='100%'/>
+                    </Box>
                 </Grid>
                 <Grid item md={3} xs={12}>
                     
@@ -102,13 +104,13 @@ const ProductDetails = () => {
                     </Card>
                 </Grid>
             </Grid>
-            <Typography variant='h1' component='h1' sx={{textAlign:'center', mt:10 }}>Find more {newProduct?.category} items</Typography>
+            <Typography variant='body1' color='primary'  sx={{textAlign:'center', mt:10 }}>Find more {newProduct?.category} items</Typography>
             <Box sx={{display:'flex' ,justifyContent:'center', alignItems:'center'}}>
                 
                 <Box sx={{mt:8, display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
                         {relvantItem?.map((product) => (
                             
-                            <Card sx={{ display: 'flex', m:2 }} key={product.key} >
+                            <Card sx={{ display: 'flex', m:2, maxWidth:350 }} key={product.key} >
                                
                                <CardActionArea onClick={()=>productChangeHandler(product._id)}>
                                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>

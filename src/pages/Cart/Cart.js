@@ -12,7 +12,7 @@ const CartScreen = () => {
     
 
     const updateCartHandler = async (item, quantity) => {
-        const {data} = await axios.get(`http://localhost:5000/products/${item._id}`)
+        const {data} = await axios.get(`https://powerful-meadow-17770.herokuapp.com/products/${item._id}`)
         if (data.countInStock < quantity) {
           window.alert('Sorry. Product is out of stock');
           return;

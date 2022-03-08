@@ -21,7 +21,7 @@ const Shipping = () => {
       const [address, setAddress] = useState({})
 
       useEffect(()=>{
-        fetch(`http://localhost:5000/shippingaddress/${user.email}`)
+        fetch(`https://powerful-meadow-17770.herokuapp.com/shippingaddress/${user.email}`)
         .then(res => res.json())
         .then(data => setAddress(data))
       } ,[])
@@ -88,7 +88,7 @@ const Shipping = () => {
             postalCode,
             country,
           }));
-        axios.post('http://localhost:5000/shipping', data)
+        axios.post('https://powerful-meadow-17770.herokuapp.com/shipping', data)
         .then(res =>{
           navigate('/payment');
         }
