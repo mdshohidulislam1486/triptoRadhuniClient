@@ -179,7 +179,7 @@ const theme = createTheme({
                                  
                                 <Link style={{color:'#000', textDecoration:'none'}} to='/about'> <Typography>Customer service- </Typography> </Link>
                                <Link style={{color:'#000', textDecoration:'none'}} to='/about'> <Typography>About us- </Typography> </Link>
-                                <a style={{color:'#000', textDecoration:'none'}} href="https://www.wheresidewalksend.com/trip-foundation/" target='_blank' rel='noreferrer'><Typography>Tripto Foundation- </Typography></a>
+                                <a style={{color:'#000', textDecoration:'none'}} href="http://triptoboloyfoundation.org/" target='_blank' rel='noreferrer'><Typography>Tripto Foundation- </Typography></a>
                                 <Button size="small" color='success' variant="contained">Donate Now</Button>
 
                             </Grid>
