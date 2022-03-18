@@ -48,6 +48,7 @@ const PlaceOrder = () => {
                 totalPrice,
             }
             
+        
             )
             dispatch({type:'CART_CLEAR'});
             Cookies.remove('cartItems');

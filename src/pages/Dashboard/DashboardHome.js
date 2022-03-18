@@ -76,6 +76,16 @@ const DashboardHome = () => {
                         </ListItemText>
                     </ListItem>
                     </Link>
+                    <Link to='/dashboard/addproduct' style={{textDecoration:'none'}}>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <InboxIcon />
+                        </ListItemIcon>
+                        <ListItemText  sx={{textDecoration:"none", color:'#000'}}>
+                           Add New Product
+                        </ListItemText>
+                    </ListItem>
+                    </Link>
                     
                     
             

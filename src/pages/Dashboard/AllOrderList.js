@@ -75,15 +75,15 @@ import axios from 'axios';
 
 
 const AllOrderList = () => {
-    const [ordersList, setOrdrsList] = useState([])
-    const [newProduct, setNewProduct] =useState([])
+    const [ordersList, setOrdrsList] = useState([]) // all orders
+    const [newProduct, setNewProduct] =useState([]) // this is for orderdetap with image
     
   
     
 
 
     useEffect(()=>{
-      fetch('https://powerful-meadow-17770.herokuapp.com/orderslist')
+      fetch('http://localhost:5000/orderslist')
       .then(res => res.json())
       .then(data => setOrdrsList(data))
     }, [])
@@ -101,36 +101,31 @@ const AllOrderList = () => {
     const handleClose = () => setOpen(false);
 
     
-    const [confirm, setConfirm] = useState('')
-    const [newConfirmId, setNewConfirmId] = useState(false)
-   
-
-    useEffect(()=>{
-      
-    },[])
+    //cnfirmaing order shipping and delivered at
+    const [newConfirmId, setNewConfirmId] = useState([])
     
-    const handleConfirm = (id)=> {
       
-      const url =   `https://powerful-meadow-17770.herokuapp.com/orderslist/${id}`
+  
+    const handleConfirm = (id)=> {
+      const clickedId = ordersList.find((a) => a._id === id)
+      clickedId.confirmed = true
+      setNewConfirmId(clickedId)
+      console.log(clickedId)
+      const url =   `http://localhost:5000/orderslist/${id}`
       
       fetch(url, {
         method:'PUT',
         headers:{
           'content-type':'application/json'
         },
-        body: JSON.stringify()
+        body: JSON.stringify(newConfirmId)
       })
+      .then(res => res.json())
+      .then(data => {
       
+      })
     }
    
-    useEffect(() => {
-      const newId = ordersList.find((a) => a._id === confirm)
-      fetch(`https://powerful-meadow-17770.herokuapp.com/${newId}}`)
-      .then(res => res.json())
-      .then(newId => setNewConfirmId(newId))
-      
-
-    }, [])
 
 
 
@@ -167,7 +162,7 @@ const AllOrderList = () => {
                     <TableCell>{new Date(orderList?.createdAt).toLocaleString()}</TableCell> 
                     <TableCell>$ {orderList?.taxPrice} & $ {orderList?.shippingPrice? orderList?.shippingPrice : 0} & ${orderList.itemsPrice}</TableCell> 
                     <TableCell color='primary'><strong>$ {orderList?.totalPrice}</strong></TableCell> 
-                    <TableCell onClick={()=>handleConfirm(orderList._id)}>{newConfirmId?  'Confirmed' :'Not Confirmed'}</TableCell> 
+                    <TableCell onClick={()=>handleConfirm(orderList._id)}>{newConfirmId.confirmed?  'Confirmed' :'Not Confirmed'}</TableCell> 
 
                 </TableRow>
                 </TableBody>)}

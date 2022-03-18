@@ -26,7 +26,7 @@ const AddProducts = () => {
       };
     
     return (
-        <Layout>
+       
             <div className={addProduct}>
                 <Typography>Add a new Products</Typography>
                 <form onSubmit={handleSubmit(onSubmit)} >
@@ -335,7 +335,7 @@ const AddProducts = () => {
                     </List>
                 </form>
             </div>
-        </Layout>
+       
     )
 }
 export default AddProducts;

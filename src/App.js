@@ -37,7 +37,6 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/" element={<Home />}/>
             <Route path="*" element={<Home />}/>
-            <Route path='/addproduct' element={<AdminPrivateRoute><AddProducts/></AdminPrivateRoute>} />
             <Route path='/about' element={<About></About>} />
             <Route path='/login' element={<Login/>} />
             <Route path='/cart' element={<CartScreen/>} />
@@ -45,6 +44,7 @@ function App() {
               <Route path='makeadmin' element={<MakeAdmin/>}/>
               <Route path='productlist' element={<ProductList/>}/>
               <Route path='allOrderList' element={<AllOrderList/>}/>
+              <Route path='addproduct' element={<AddProducts/>}/>
             </Route>
             <Route path='/shipping' element={<PriavateRoute><Shipping/></PriavateRoute>}></Route>
             <Route path='/placeorder' element={<PriavateRoute><PlaceOrder/></PriavateRoute>}></Route>
