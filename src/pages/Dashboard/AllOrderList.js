@@ -105,21 +105,21 @@ const AllOrderList = () => {
     const [newConfirmId, setNewConfirmId] = useState({})
     const [newValue, setNewValue] =useState([...ordersList])
     useEffect(()=>{
-      
-    }, [])
+      setNewValue(ordersList)
+    }, [newConfirmId])
     
     const updateHandle = () =>{
-     newConfirmId.confirmed = true
+     newConfirmId.confirmed = false
       
     }
 
 
     const handleConfirm = (id)=> {
       const clickedId = ordersList.find((a) => a._id === id)
-      updateHandle()
+      
       setNewConfirmId(clickedId)
       console.log(clickedId)
-   
+      updateHandle()
       const url =   `http://localhost:5000/orderslist/${id}`
       
       fetch(url, {
@@ -127,7 +127,7 @@ const AllOrderList = () => {
         headers:{
           'content-type':'application/json'
         },
-        body: JSON.stringify(newConfirmId)
+        body: JSON.stringify(newValue)
       }) 
       .then(res => res.json())
       .then(data => {
@@ -138,6 +138,7 @@ const AllOrderList = () => {
         alert('nothing happened')
       }
       })
+      .catch(error => console.log(error))
     }
     return (
         <div>
