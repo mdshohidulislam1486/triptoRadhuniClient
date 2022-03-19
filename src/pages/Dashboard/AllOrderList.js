@@ -102,15 +102,24 @@ const AllOrderList = () => {
 
     
     //cnfirmaing order shipping and delivered at
-    const [newConfirmId, setNewConfirmId] = useState([])
-    
+    const [newConfirmId, setNewConfirmId] = useState({})
+    const [newValue, setNewValue] =useState([...ordersList])
+    useEffect(()=>{
       
-  
+    }, [])
+    
+    const updateHandle = () =>{
+     newConfirmId.confirmed = true
+      
+    }
+
+
     const handleConfirm = (id)=> {
       const clickedId = ordersList.find((a) => a._id === id)
-      clickedId.confirmed = true
+      updateHandle()
       setNewConfirmId(clickedId)
       console.log(clickedId)
+   
       const url =   `http://localhost:5000/orderslist/${id}`
       
       fetch(url, {
@@ -119,16 +128,17 @@ const AllOrderList = () => {
           'content-type':'application/json'
         },
         body: JSON.stringify(newConfirmId)
-      })
+      }) 
       .then(res => res.json())
       .then(data => {
-      
+        if(data.modifiedCount){
+          alert('modifeed')
+          setNewConfirmId(data)
+      } else{
+        alert('nothing happened')
+      }
       })
     }
-   
-
-
-
     return (
         <div>
           <Typography>This is the  All Order list </Typography>
@@ -162,7 +172,7 @@ const AllOrderList = () => {
                     <TableCell>{new Date(orderList?.createdAt).toLocaleString()}</TableCell> 
                     <TableCell>$ {orderList?.taxPrice} & $ {orderList?.shippingPrice? orderList?.shippingPrice : 0} & ${orderList.itemsPrice}</TableCell> 
                     <TableCell color='primary'><strong>$ {orderList?.totalPrice}</strong></TableCell> 
-                    <TableCell onClick={()=>handleConfirm(orderList._id)}>{newConfirmId.confirmed?  'Confirmed' :'Not Confirmed'}</TableCell> 
+                    <TableCell onClick={()=>handleConfirm(orderList._id)}>{orderList.confirmed?  'Confirmed' :'Not Confirmed'}</TableCell> 
 
                 </TableRow>
                 </TableBody>)}
