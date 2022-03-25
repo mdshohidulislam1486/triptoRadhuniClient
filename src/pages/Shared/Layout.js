@@ -57,11 +57,11 @@ const theme = createTheme({
             }
 
             const navStyle = makeStyles({
-                navIcon:{
+                /* navIcon:{
                     [navTheme.breakpoints.up('sm')]: {
                         display:"none"
                     },
-                },
+                }, */
                 navItems:{
                     [navTheme.breakpoints.down('md')]: {
                         display:"none"

@@ -103,23 +103,19 @@ const AllOrderList = () => {
     
     //cnfirmaing order shipping and delivered at
     const [newConfirmId, setNewConfirmId] = useState({})
-    const [newValue, setNewValue] =useState([...ordersList])
-    useEffect(()=>{
-      setNewValue(ordersList)
-    }, [newConfirmId])
+    const [againCon, setAgainCon] = useState({})
+    const [myBool, setMyBool] = useState(false)
     
-    const updateHandle = () =>{
-     newConfirmId.confirmed = false
-      
-    }
+    useEffect(()=>{
+       const myConrimf = newConfirmId.confirmed = myBool
+        setAgainCon(myConrimf)
+    }, [newConfirmId, myBool])
 
-
+    
     const handleConfirm = (id)=> {
       const clickedId = ordersList.find((a) => a._id === id)
-      
+      setMyBool(clickedId.confirmed?  false : true)
       setNewConfirmId(clickedId)
-      console.log(clickedId)
-      updateHandle()
       const url =   `http://localhost:5000/orderslist/${id}`
       
       fetch(url, {
@@ -127,16 +123,11 @@ const AllOrderList = () => {
         headers:{
           'content-type':'application/json'
         },
-        body: JSON.stringify(newValue)
+        body: JSON.stringify(againCon)
       }) 
       .then(res => res.json())
       .then(data => {
-        if(data.modifiedCount){
-          alert('modifeed')
-          setNewConfirmId(data)
-      } else{
-        alert('nothing happened')
-      }
+       
       })
       .catch(error => console.log(error))
     }
@@ -173,7 +164,7 @@ const AllOrderList = () => {
                     <TableCell>{new Date(orderList?.createdAt).toLocaleString()}</TableCell> 
                     <TableCell>$ {orderList?.taxPrice} & $ {orderList?.shippingPrice? orderList?.shippingPrice : 0} & ${orderList.itemsPrice}</TableCell> 
                     <TableCell color='primary'><strong>$ {orderList?.totalPrice}</strong></TableCell> 
-                    <TableCell onClick={()=>handleConfirm(orderList._id)}>{orderList.confirmed?  'Confirmed' :'Not Confirmed'}</TableCell> 
+                    <TableCell ><Button onClick={()=>handleConfirm(orderList._id)} variant='contained'>{orderList.confirmed?  'Confirmed' :'Not Confirmed'}</Button></TableCell> 
 
                 </TableRow>
                 </TableBody>)}
