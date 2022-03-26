@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
@@ -98,7 +99,9 @@ const AllOrderList = () => {
 
     
     const handleConfirm = (id)=> {
-      const clickedId = ordersList.find((a) => a._id === id)
+      let confirmPost = confirm('Do you want to change the confirm status')
+      if(confirmPost){
+        const clickedId = ordersList.find((a) => a._id === id)
       setMyBool(clickedId.confirmed?  false : true)
       clickedId.confirmed = myBool
       setNewConfirmId(clickedId, 1000)
@@ -116,10 +119,19 @@ const AllOrderList = () => {
        
       })
       .catch(error => console.log(error))
+      }else{
+        return
+      }
+      
     }
+   
     const handelShipping = (id)=> {
+      
       const clickedId = ordersList.find((a) => a._id === id)
-      setMyBool(clickedId.shippedAt?  false : true)
+      // eslint-disable-next-line no-restricted-globals
+      let confirmPost = confirm('Do you want to change the shipping status')
+      if(confirmPost){
+        setMyBool(clickedId.shippedAt?  false : true)
       clickedId.shippedAt = myBool
       setNewConfirmId(clickedId, 1000)
       const url =   `http://localhost:5000/orderslist/${id}`
@@ -136,6 +148,40 @@ const AllOrderList = () => {
        
       })
       .catch(error => console.log(error))
+
+      } else{
+        return
+      }
+      
+    }
+    const handelDeliver = (id)=> {
+      
+      const clickedId = ordersList.find((a) => a._id === id)
+      // eslint-disable-next-line no-restricted-globals
+      let confirmPost = confirm('Do you want to change the deliver status, the product will be removed from the list if you delivered the order')
+      if(confirmPost){
+        setMyBool(clickedId.deliveredAt?  false : true)
+      clickedId.deliveredAt = myBool
+      setNewConfirmId(clickedId, 1000)
+      const url =   `http://localhost:5000/orderslist/${id}`
+      
+      fetch(url, {
+        method:'PUT',
+        headers:{
+          'content-type':'application/json'
+        },
+        body: JSON.stringify(newConfirmId)
+      }) 
+      .then(res => res.json())
+      .then(data => {
+       
+      })
+      .catch(error => console.log(error))
+
+      } else{
+        return
+      }
+      
     }
     return (
         <div>
@@ -172,6 +218,7 @@ const AllOrderList = () => {
                     <TableCell color='primary'><strong>$ {orderList?.totalPrice}</strong></TableCell> 
                     <TableCell ><Button onClick={()=>handleConfirm(orderList._id)} variant='contained'>{orderList.confirmed?  'Yes' :'No'}</Button></TableCell> 
                     <TableCell ><Button color='secondary' onClick={()=>handelShipping(orderList._id)} variant='contained'>{orderList.shippedAt?  'Yes' :'No'}</Button></TableCell> 
+                    <TableCell ><Button color='primary' onClick={()=>handelDeliver(orderList._id)} variant='contained'>{orderList.deliveredAt?  'Yes' :'No'}</Button></TableCell> 
 
                 </TableRow>
                 </TableBody>)}
