@@ -1,33 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
-import { visuallyHidden } from '@mui/utils';
+
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 // web.cjs is required for IE11 support
 import { animated, useSpring} from 'react-spring'
-import { List, ListItem, Tab } from '@mui/material';
-import axios from 'axios';
+import { TableRow, Typography } from '@mui/material';
+
 
     const Fade = React.forwardRef(function Fade(props, ref) {
       const { in: open, children, onEnter, onExited, ...other } = props;
@@ -131,6 +117,26 @@ const AllOrderList = () => {
       })
       .catch(error => console.log(error))
     }
+    const handelShipping = (id)=> {
+      const clickedId = ordersList.find((a) => a._id === id)
+      setMyBool(clickedId.shippedAt?  false : true)
+      clickedId.shippedAt = myBool
+      setNewConfirmId(clickedId, 1000)
+      const url =   `http://localhost:5000/orderslist/${id}`
+      
+      fetch(url, {
+        method:'PUT',
+        headers:{
+          'content-type':'application/json'
+        },
+        body: JSON.stringify(newConfirmId)
+      }) 
+      .then(res => res.json())
+      .then(data => {
+       
+      })
+      .catch(error => console.log(error))
+    }
     return (
         <div>
           <Typography>This is the  All Order list </Typography>
@@ -148,8 +154,8 @@ const AllOrderList = () => {
                   <TableCell><strong>Tax/Shipping/Price</strong></TableCell>
                   <TableCell><strong>Total Price</strong></TableCell>
                   <TableCell><strong>Confirmation</strong></TableCell>
-                  <TableCell><strong>Shipped At</strong></TableCell>
-                  <TableCell><strong>Delivered At</strong></TableCell>
+                  <TableCell><strong>Shipped </strong></TableCell>
+                  <TableCell><strong>Delivered </strong></TableCell>
                     
                   </TableRow>
                 </TableHead>
@@ -164,7 +170,8 @@ const AllOrderList = () => {
                     <TableCell>{new Date(orderList?.createdAt).toLocaleString()}</TableCell> 
                     <TableCell>$ {orderList?.taxPrice} & $ {orderList?.shippingPrice? orderList?.shippingPrice : 0} & ${orderList.itemsPrice}</TableCell> 
                     <TableCell color='primary'><strong>$ {orderList?.totalPrice}</strong></TableCell> 
-                    <TableCell ><Button onClick={()=>handleConfirm(orderList._id)} variant='contained'>{orderList.confirmed?  'Confirmed' :'Not Confirmed'}</Button></TableCell> 
+                    <TableCell ><Button onClick={()=>handleConfirm(orderList._id)} variant='contained'>{orderList.confirmed?  'Yes' :'No'}</Button></TableCell> 
+                    <TableCell ><Button color='secondary' onClick={()=>handelShipping(orderList._id)} variant='contained'>{orderList.shippedAt?  'Yes' :'No'}</Button></TableCell> 
 
                 </TableRow>
                 </TableBody>)}
