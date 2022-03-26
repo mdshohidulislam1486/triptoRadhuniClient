@@ -103,19 +103,19 @@ const AllOrderList = () => {
     
     //cnfirmaing order shipping and delivered at
     const [newConfirmId, setNewConfirmId] = useState({})
-    const [againCon, setAgainCon] = useState({})
     const [myBool, setMyBool] = useState(false)
     
-    useEffect(()=>{
+    /* useEffect(()=>{
        const myConrimf = newConfirmId.confirmed = myBool
         setAgainCon(myConrimf)
-    }, [newConfirmId, myBool])
+    }, [newConfirmId, myBool]) */
 
     
     const handleConfirm = (id)=> {
       const clickedId = ordersList.find((a) => a._id === id)
       setMyBool(clickedId.confirmed?  false : true)
-      setNewConfirmId(clickedId)
+      clickedId.confirmed = myBool
+      setNewConfirmId(clickedId, 1000)
       const url =   `http://localhost:5000/orderslist/${id}`
       
       fetch(url, {
@@ -123,7 +123,7 @@ const AllOrderList = () => {
         headers:{
           'content-type':'application/json'
         },
-        body: JSON.stringify(againCon)
+        body: JSON.stringify(newConfirmId)
       }) 
       .then(res => res.json())
       .then(data => {
