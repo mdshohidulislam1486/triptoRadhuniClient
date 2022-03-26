@@ -3,7 +3,7 @@ import React from 'react';
 import { Controller, useForm } from "react-hook-form";
 import useStyles from '../utilities/style';
 import axios from 'axios'
-import Layout from '../Shared/Layout';
+
 
 
 const AddProducts = () => {
@@ -13,7 +13,9 @@ const AddProducts = () => {
         .then(res =>{
             if(res.data.insertedId){
                 alert('Product Successfully addeded')
-            }
+            } else{
+                alert('nothing happened')
+            } 
         })
         reset()
     };
@@ -324,6 +326,7 @@ const AddProducts = () => {
                             <MenuItem value="Beauty&Health">Beauty&Health</MenuItem>
                             <MenuItem value="Fruits">Fruits</MenuItem>
                             <MenuItem value="Vegitables">Vegitables</MenuItem>
+                            <MenuItem value="Fish">Fish</MenuItem>
                             <MenuItem value="Others">Others</MenuItem>
                             
                             </Select>

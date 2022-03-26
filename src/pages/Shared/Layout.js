@@ -17,6 +17,12 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import PinterestIcon from '@mui/icons-material/Pinterest';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import beef from '../../Images/icon/meat.svg'
+import fish from '../../Images/icon/fish.png'
+
+
 
 
 
@@ -82,16 +88,17 @@ const theme = createTheme({
                 <List>
                     <ListItem button >
                         <ListItemIcon>
-                         <InboxIcon />  
+                         <img src={beef} alt="" width={30} />
                         </ListItemIcon>
-                        <ListItemText>Home </ListItemText>
+                        <ListItemText><Link style={{textDecoration:'none'}} to=''> Meat</Link> </ListItemText>
                     </ListItem>
                     <ListItem button >
                         <ListItemIcon>
-                            <MailIcon />
+                         <img src={fish} alt="" width={30} />
                         </ListItemIcon>
-                        <ListItemText>About</ListItemText>
+                        <ListItemText><Link style={{textDecoration:'none'}} to=''> Fish</Link> </ListItemText>
                     </ListItem>
+                    
                 </List>
                 <Divider />
                 <List>
@@ -227,7 +234,7 @@ const theme = createTheme({
                     </Container>
 
                     <Typography variant='body2' sx={{textAlign:'center'}}>
-                    © All rights reserved to Tripto Radhuni 
+                    © All rights reserved to Tripto Radhuni   <FontAwesomeIcon icon={faCoffee} />
                     </Typography>
                 </footer>
             </ThemeProvider>
