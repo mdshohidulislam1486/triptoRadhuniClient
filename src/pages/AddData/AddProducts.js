@@ -9,6 +9,7 @@ import axios from 'axios'
 const AddProducts = () => {
     const {register, handleSubmit, reset, control, formState:{errors} } = useForm();
     const onSubmit = data =>{
+        console.log('fuch you')
         axios.post('https://powerful-meadow-17770.herokuapp.com/products', data)
         .then(res =>{
             if(res.data.insertedId){
@@ -78,10 +79,10 @@ const AddProducts = () => {
                                 id="description"
                                 label="Description"
                                 inputProps={{ type: 'description' }}
-                                error={Boolean(errors.name)}
+                                error={Boolean(errors.description)}
                                 helperText={
-                                    errors.name
-                                    ? errors.name.type === 'minLength'
+                                    errors.description
+                                    ? errors.description.type === 'minLength'
                                         ? 'Description length is more than 1'
                                         : 'Description is required'
                                     : ''
@@ -109,10 +110,10 @@ const AddProducts = () => {
                                 id="image"
                                 label="Image Link"
                                 inputProps={{ type: 'text' }}
-                                error={Boolean(errors.name)}
+                                error={Boolean(errors.image)}
                                 helperText={
-                                    errors.name
-                                    ? errors.name.type === 'minLength'
+                                    errors.image
+                                    ? errors.image.type === 'minLength'
                                         ? 'Image length is more than 1'
                                         : 'Image is required'
                                     : ''
@@ -129,7 +130,7 @@ const AddProducts = () => {
                             defaultValue=""
                             rules={{
                                 required: true,
-                                minLength: 2,
+                                minLength: 1,
                             }}
                             render={({ field }) => (
                                 <TextField
@@ -138,10 +139,10 @@ const AddProducts = () => {
                                 id="rating"
                                 label="Rating"
                                 inputProps={{ type: 'rating' }}
-                                error={Boolean(errors.name)}
+                                error={Boolean(errors.rating)}
                                 helperText={
-                                    errors.name
-                                    ? errors.name.type === 'minLength'
+                                    errors.rating   
+                                    ? errors.rating.type === 'minLength'
                                         ? 'Rating length is more than 1'
                                         : 'Rating is required'
                                     : ''
@@ -167,10 +168,10 @@ const AddProducts = () => {
                                 id="slug"
                                 label="Slug/Unique name"
                                 inputProps={{ type: 'slug' }}
-                                error={Boolean(errors.name)}
+                                error={Boolean(errors.slug)}
                                 helperText={
-                                    errors.name
-                                    ? errors.name.type === 'minLength'
+                                    errors.slug
+                                    ? errors.slug.type === 'minLength'
                                         ? 'Description length is more than 1'
                                         : 'Description is required'
                                     : ''
@@ -196,10 +197,10 @@ const AddProducts = () => {
                                 id="type"
                                 label="Type"
                                 inputProps={{ type: 'type' }}
-                                error={Boolean(errors.name)}
+                                error={Boolean(errors.type)}
                                 helperText={
-                                    errors.name
-                                    ? errors.name.type === 'minLength'
+                                    errors.type
+                                    ? errors.type.type === 'minLength'
                                         ? 'Type length is more than 1'
                                         : 'Type is required'
                                     : ''
@@ -221,7 +222,7 @@ const AddProducts = () => {
                                 id="numReviews"
                                 label="Number of reviews"
                                 inputProps={{ type: 'numReviews' }}
-                                error={Boolean(errors.name)}
+                                error={Boolean(errors.numReviews)}
                                
                                 {...field}
                                     ></TextField>
@@ -244,10 +245,10 @@ const AddProducts = () => {
                                 id="brand"
                                 label="Product Brand"
                                 inputProps={{ type: 'brand' }}
-                                error={Boolean(errors.name)}
+                                error={Boolean(errors.brand)}
                                 helperText={
-                                    errors.name
-                                    ? errors.name.type === 'minLength'
+                                    errors.brand    
+                                    ? errors.brand.type === 'minLength'
                                         ? 'Brand length is more than 1'
                                         : 'Brand is required'
                                     : ''
@@ -272,7 +273,7 @@ const AddProducts = () => {
                                 id="countInStock"
                                 label="Present stock"
                                 inputProps={{ type: 'countInStock' }}
-                                error={Boolean(errors.name)}
+                                error={Boolean(errors.stock)}
                                 
                                 {...field}
                                     ></TextField>
@@ -294,10 +295,10 @@ const AddProducts = () => {
                                 id="price"
                                 label="Enter product price"
                                 inputProps={{ type: 'number' }}
-                                error={Boolean(errors.name)}
+                                error={Boolean(errors.price)}
                                 helperText={
-                                    errors.name
-                                    ? errors.name.type === ''
+                                    errors.price
+                                    ? errors.price.type === ''
                                         ? 'Price length is more than 1'
                                         : ''
                                     : ''
@@ -311,7 +312,7 @@ const AddProducts = () => {
                         <FormControl fullWidth>
                             <InputLabel defaultValue='' id="demo-simple-select-label">Category</InputLabel>
                             <Select
-                            required='true'
+                        
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={category}
@@ -323,7 +324,7 @@ const AddProducts = () => {
                             <MenuItem value="Cooking">Cooking</MenuItem>
                             <MenuItem value="Dairy">Dairy</MenuItem>
                             <MenuItem value="Beverages">Beverages</MenuItem>
-                            <MenuItem value="Beauty&Health">Beauty&Health</MenuItem>
+                            <MenuItem value="BeautyHealth">BeautyHealth</MenuItem>
                             <MenuItem value="Fruits">Fruits</MenuItem>
                             <MenuItem value="Vegitables">Vegitables</MenuItem>
                             <MenuItem value="Fish">Fish</MenuItem>
@@ -332,7 +333,7 @@ const AddProducts = () => {
                             </Select>
                         </FormControl>
                         </ListItem>
-                        <Button variant="contained" type="submit" fullWidth color="primary">
+                        <Button onClick={handleSubmit(onSubmit)} variant="contained" type="submit" fullWidth color="primary">
                             Add a new item
                         </Button>
                     </List>
