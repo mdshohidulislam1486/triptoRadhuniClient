@@ -5,6 +5,8 @@ import Layout from '../Shared/Layout';
 import useStyles from '../utilities/style';
 import axios from 'axios';
 import { Store } from '../utilities/Store';
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 
 const ProductDetails = () => {
@@ -56,8 +58,9 @@ const ProductDetails = () => {
     navigate('/cart')
 
     }
-
-   
+    useEffect(()=>{
+        AOS.init()
+    }, [])
     return (
         <>
           <Layout title={newProduct?.name}>
@@ -66,7 +69,7 @@ const ProductDetails = () => {
                     Back to home
                 </Link>
             </Box>
-            <Grid container spacing={1}>
+            <Grid container spacing={1} data-aos="fade-up">
                 <Grid item md={6} xs={12}>
                     <Box sx={{maxWidth:440, maxHeight:440}}>
                     <img src={newProduct?.image} alt={newProduct?.name} width='100%' height='100%'/>

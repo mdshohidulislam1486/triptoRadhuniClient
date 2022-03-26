@@ -3,6 +3,8 @@ import axios from 'axios';
 import React, {useState, useEffect, useContext} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Store } from '../utilities/Store';
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 
 
@@ -16,11 +18,17 @@ const Products = () => {
     .then(data => setProducts(data))
   } ,[])
 
-  const [meatItems, setMeatItem] = useState([])
+  /* const [meatItems, setMeatItem] = useState([])
   useEffect(() =>{
    const meatItem =  products.filter((meat) => meat.category === 'Beef' )
    setMeatItem(meatItem)
-  },[products])
+  },[products]) */
+
+  const getMeatItem = () =>{
+    const meatItem =  products.filter((meat) => meat.category === 'Beef' )
+    setProducts(meatItem)
+  }
+ 
 
   const addToCartHandler = async (product) =>{
     const existItem = state.cart.cartItems.find(x => x._id === product._id)
@@ -34,21 +42,25 @@ const Products = () => {
     navigate('/cart')
 
     }
+    useEffect(()=>{
+      AOS.init()
+  }, [])
 
     return (
-        <Box>
+        <Box data-aos='zoom-out-up'>
             <Typography component='h2' variant='h2'>Products</Typography>
             <Grid container spacing={3}
           sx={{justifyContent:'center'}}
           >
-            {meatItems?.map((product) =>(<Grid
+            {products?.map((product) =>(<Grid
               item
               sm={6}
               md={4}
               lg={3}
               key={product?.name}
+              data-aos='zoom-out-up'
               >
-                <Card>
+                <Card >
                 <Link style={{textDecoration:"none"}} to={`productDetails/${product._id}`} >
                   <CardActionArea>
                     <CardMedia component='img' image= {product.image}

@@ -20,6 +20,7 @@ import Payment from './pages/Payment/Payment';
 import PlaceOrder from './pages/PlaceOrder/PlaceOrder';
 import AllOrderList from './pages/Dashboard/AllOrderList';
 
+
 function App() {
   /* useEffect(()=>{
     const jssStyles = document.querySelector('#jss-server-side')
@@ -27,13 +28,15 @@ function App() {
       jssStyles.parentElement.removeChild(jssStyles)
     }
   }, []) */
+
   return (
     <SnackbarProvider anchorOrigin={{vertical:'top', horizontal:'center'}}>
       
       <StoreProvider>
       <AuthProvider>
         <BrowserRouter>
-          <Routes>
+         
+         <Routes>
             <Route index element={<Home />} />
             <Route path="/" element={<Home />}/>
             <Route path="*" element={<Home />}/>
@@ -52,6 +55,7 @@ function App() {
             <Route path='/register' element={<Register/>} />
             <Route path='/productDetails/:_id' element={<ProductDetails />} />    
           </Routes>
+         
         </BrowserRouter>
         </AuthProvider>
         </StoreProvider>

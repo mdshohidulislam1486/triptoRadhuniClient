@@ -137,6 +137,7 @@ const theme = createTheme({
             <head>
                 <title>{title? `${title} - Tripto Radhuni`: 'Tripto Radhuni'} </title>
                 {description && <meta name='descripton' content={description}> </meta>}
+                
             </head>
             <ThemeProvider theme={theme}>
                 <CssBaseline></CssBaseline>

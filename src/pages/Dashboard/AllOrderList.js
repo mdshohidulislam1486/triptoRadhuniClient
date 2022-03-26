@@ -15,6 +15,9 @@ import Button from '@mui/material/Button';
 import { animated, useSpring} from 'react-spring'
 import { TableRow, Typography } from '@mui/material';
 
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+
 
     const Fade = React.forwardRef(function Fade(props, ref) {
       const { in: open, children, onEnter, onExited, ...other } = props;
@@ -32,7 +35,9 @@ import { TableRow, Typography } from '@mui/material';
           }
         },
       });
-
+      useEffect(()=>{
+        AOS.init()
+    }, [])
       return (
         <animated.div ref={ref} style={style} {...other}>
           {children}
@@ -191,7 +196,7 @@ const AllOrderList = () => {
             <TableContainer>
               <Table>
                 <TableHead>
-                  <TableRow>
+                  <TableRow data-aos="zoom-in-down">
                   <TableCell><strong>Name</strong></TableCell>
                   <TableCell><strong>Phone</strong></TableCell>
                   <TableCell><strong>Shipping Address</strong></TableCell>
@@ -200,7 +205,7 @@ const AllOrderList = () => {
                   <TableCell><strong>Ordre Date</strong></TableCell> 
                   <TableCell><strong>Tax/Shipping/Price</strong></TableCell>
                   <TableCell><strong>Total Price</strong></TableCell>
-                  <TableCell><strong>Confirmation</strong></TableCell>
+                  <TableCell><strong>Confirmed</strong></TableCell>
                   <TableCell><strong>Shipped </strong></TableCell>
                   <TableCell><strong>Delivered </strong></TableCell>
                     
@@ -208,7 +213,7 @@ const AllOrderList = () => {
                 </TableHead>
 
                {ordersList.map((orderList) =>  <TableBody key={orderList._id}>
-                  <TableRow>
+                  <TableRow data-aos="zoom-in-down">
                     <TableCell>{orderList?.shippingAddress?.name}</TableCell> 
                     <TableCell>{orderList?.shippingAddress?.phone}</TableCell> 
                     <TableCell>{orderList?.shippingAddress?.address} {orderList?.shippingAddress?.city} </TableCell> 
