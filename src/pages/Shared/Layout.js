@@ -1,5 +1,5 @@
 import { AppBar, Badge, Box, Button, Container, createTheme, Divider, Drawer, Grid, IconButton, InputBase, List, ListItem, ListItemIcon, ListItemText, Paper, Switch, ThemeProvider, Toolbar, Typography, useTheme } from '@mui/material';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Store } from '../utilities/Store';
 import useStyles from '../utilities/style';
@@ -27,7 +27,10 @@ import fish from '../../Images/icon/fish.png'
 
 
 
-const Layout = ({children, title, description}) => {
+const Layout = ({children, title, description} ) => {
+
+  
+    
 const {state, dispatch} = useContext(Store)
 const {admin} = useAuth()
 const {darkMode, cart} =state
@@ -132,6 +135,9 @@ const theme = createTheme({
         Cookies?.remove('shippingAddress')
         Cookies?.remove('paymentMethod')
     }
+
+
+
     return (
         <>
             <head>

@@ -5,18 +5,33 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Store } from '../utilities/Store';
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import './Product.css'
+
 
 
 
 const Products = () => {
   const [products, setProducts] = useState([])
+  const [selectProduct, setSelectProduct] = useState([])
   const {state, dispatch} = useContext(Store)
   const navigate = useNavigate()
+
+  //  pagination
+  const [pageCount, setPageCount] = useState(0)
+  const [page, setPage] = useState(0)
+  let size = 8;
   useEffect(()=>{
-    fetch('https://powerful-meadow-17770.herokuapp.com/products')
+    return() =>{
+      fetch(`https://powerful-meadow-17770.herokuapp.com/products?page=${page}&&size=${size}`)
     .then(res => res.json())
-    .then(data => setProducts(data))
-  } ,[])
+    .then(data =>{
+      setProducts(data)
+      const count = data?.count
+      const pageNumber = Math.ceil(count/size)
+      setPageCount(pageNumber)
+    } )
+    }
+  } ,[page])
 
   /* const [meatItems, setMeatItem] = useState([])
   useEffect(() =>{
@@ -24,11 +39,15 @@ const Products = () => {
    setMeatItem(meatItem)
   },[products]) */
 
-  const getMeatItem = () =>{
-    const meatItem =  products.filter((meat) => meat.category === 'Beef' )
-    setProducts(meatItem)
-    console.log('thisfunction is called')
+  const setDifferntItem = (item) =>{
+    let allItems =  products.filter((meat) => meat.category === item )
+    
+    setSelectProduct(allItems)
   }
+
+  useEffect(()=>{
+    setSelectProduct(products)
+  },[products] )
  
 
   const addToCartHandler = async (product) =>{
@@ -47,15 +66,31 @@ const Products = () => {
       AOS.init()
   }, [])
 
+  
     return (
         <>
+       
         <Box data-aos='zoom-out-up'>
+          <Box sx={{my:5,textAlign:'center'}}>
+       
+            <Button sx={{backgroundColor:'#f7f9fc', color:"#000", fontWeight:700, m:2}} onClick={()=>setDifferntItem('Fish')}>Fish</Button>
+            <Button sx={{backgroundColor:'#f7f9fc', color:"#000", fontWeight:700, m:2}} onClick={()=>setDifferntItem('Beef')}>Meat</Button>
+            <Button sx={{backgroundColor:'#f7f9fc', color:"#000", fontWeight:700, m:2}} onClick={()=>setDifferntItem('Cooking')}>Cooking</Button>
+            <Button sx={{backgroundColor:'#f7f9fc', color:"#000", fontWeight:700, m:2}} onClick={()=>setDifferntItem('Dairy')}>Dairy</Button>
+            <Button sx={{backgroundColor:'#f7f9fc', color:"#000", fontWeight:700, m:2}} onClick={()=>setDifferntItem('Beverage')}>Beverage</Button>
+            <Button sx={{backgroundColor:'#f7f9fc', color:"#000", fontWeight:700, m:2}} onClick={()=>setDifferntItem('BeautyHealth')}>Beauty & Health</Button>
+            <Button sx={{backgroundColor:'#f7f9fc', color:"#000", fontWeight:700, m:2}} onClick={()=>setDifferntItem('Fruits')}>Fruits</Button>
+            <Button sx={{backgroundColor:'#f7f9fc', color:"#000", fontWeight:700, m:2}} onClick={()=>setDifferntItem('Vegitable')}>Vegitable</Button>
+            <Button sx={{backgroundColor:'#f7f9fc', color:"#000", fontWeight:700, m:2}} onClick={()=>setDifferntItem('Others')}>Others</Button>
+          
+         
+          </Box>
             
-            <Typography component='h2' variant='h2'>Products</Typography>
+            
             <Grid container spacing={3}
           sx={{justifyContent:'center'}}
           >
-            {products?.map((product) =>(<Grid
+            {selectProduct.map((product) =>(<Grid
               item
               sm={6}
               md={4}
@@ -91,6 +126,18 @@ const Products = () => {
               </Grid>
             ))}
           </Grid>
+          <div className="pagination">
+              {
+                [...Array(pageCount).keys()]
+                .map(number => <Button
+                className={number === page ? 'selected' : ''}
+                key={number}
+                onClick={()=> setPage(number)}
+                >
+                  {number}
+                  </Button> )
+              }
+            </div>
         </Box>
         </>
     );

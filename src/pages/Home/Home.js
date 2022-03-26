@@ -5,7 +5,7 @@ import Banner from './Banner';
 
 const Home = () => {
     return (
-        <Layout>
+        <Layout >
             <Products></Products>
         </Layout>
     );
