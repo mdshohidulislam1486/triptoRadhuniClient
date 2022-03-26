@@ -19,6 +19,7 @@ import Shipping from './pages/Shipping/Shipping';
 import Payment from './pages/Payment/Payment';
 import PlaceOrder from './pages/PlaceOrder/PlaceOrder';
 import AllOrderList from './pages/Dashboard/AllOrderList';
+import NavProvider from './pages/context/NavProvider';
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
          
+         <NavProvider>
          <Routes>
             <Route index element={<Home />} />
             <Route path="/" element={<Home />}/>
@@ -55,6 +57,7 @@ function App() {
             <Route path='/register' element={<Register/>} />
             <Route path='/productDetails/:_id' element={<ProductDetails />} />    
           </Routes>
+         </NavProvider>
          
         </BrowserRouter>
         </AuthProvider>

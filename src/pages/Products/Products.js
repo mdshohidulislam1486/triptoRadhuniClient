@@ -27,6 +27,7 @@ const Products = () => {
   const getMeatItem = () =>{
     const meatItem =  products.filter((meat) => meat.category === 'Beef' )
     setProducts(meatItem)
+    console.log('thisfunction is called')
   }
  
 
@@ -47,7 +48,9 @@ const Products = () => {
   }, [])
 
     return (
+        <>
         <Box data-aos='zoom-out-up'>
+            
             <Typography component='h2' variant='h2'>Products</Typography>
             <Grid container spacing={3}
           sx={{justifyContent:'center'}}
@@ -89,6 +92,7 @@ const Products = () => {
             ))}
           </Grid>
         </Box>
+        </>
     );
 };
 

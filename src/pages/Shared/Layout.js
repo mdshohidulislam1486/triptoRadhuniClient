@@ -90,7 +90,7 @@ const theme = createTheme({
                         <ListItemIcon>
                          <img src={beef} alt="" width={30} />
                         </ListItemIcon>
-                        <ListItemText><Link style={{textDecoration:'none'}} to=''> Meat</Link> </ListItemText>
+                        <ListItemText><Link style={{textDecoration:'none'}}  to=''> Meat</Link> </ListItemText>
                     </ListItem>
                     <ListItem button >
                         <ListItemIcon>
@@ -137,7 +137,6 @@ const theme = createTheme({
             <head>
                 <title>{title? `${title} - Tripto Radhuni`: 'Tripto Radhuni'} </title>
                 {description && <meta name='descripton' content={description}> </meta>}
-                
             </head>
             <ThemeProvider theme={theme}>
                 <CssBaseline></CssBaseline>
