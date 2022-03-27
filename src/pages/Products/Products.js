@@ -23,7 +23,7 @@ const Products = () => {
   let size = 5;
   let isMount = useRef(true);
   useEffect(()=>{
-    fetch(`http://localhost:5000/products?page=${page}&&size=${size}`)
+    fetch(`https://powerful-meadow-17770.herokuapp.com?page=${page}&&size=${size}`)
     .then(res => res.json())
     .then((data) =>{
       if(isMount.current){
@@ -69,7 +69,7 @@ const Products = () => {
   const addToCartHandler = async (product) =>{
     const existItem = state.cart.cartItems.find(x => x._id === product._id)
     const quantity = existItem? existItem.quantity + 1 : 1
-    const {data} = await axios.get(`http://localhost:5000/products/${product._id}`)
+    const {data} = await axios.get(`https://powerful-meadow-17770.herokuapp.com/products/${product._id}`)
     if(data.countInStock < quantity){
       window.alert('Sorry Product is out of stock');
       return
