@@ -1,6 +1,6 @@
 import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Pagination, Stack, Typography } from '@mui/material';
 import axios from 'axios';
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useRef} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Store } from '../utilities/Store';
 import AOS from 'aos'
@@ -15,17 +15,39 @@ const Products = () => {
   const [selectProduct, setSelectProduct] = useState([])
   const {state, dispatch} = useContext(Store)
   const navigate = useNavigate()
+  const [pageCount, setPageCount] = useState(0)
+  const [page, setPage] = useState(0)
 
   //  pagination
  
-/*   let size = 2; */
+  let size = 5;
+  let isMount = useRef(true);
   useEffect(()=>{
-      fetch('http://localhost:5000/products')
-      .then(res => res.json())
-      .then(data =>{
-      setMyProducts(data) 
-    } )
-  } ,[])
+    fetch(`http://localhost:5000/products?page=${page}&&size=${size}`)
+    .then(res => res.json())
+    .then((data) =>{
+      if(isMount.current){
+        setMyProducts(data.products)
+        const count  = data.count
+        const pageNumber = Math.ceil(count / size )
+        setPageCount(pageNumber)
+      }
+        
+    })
+    .catch(err => console.log(err))
+    return () => {
+      isMount.current = false;
+    }
+  } ,[page])
+
+ /*  fetch('http://localhost:5000/products')
+    .then(res => res.json())
+    .then(data =>{
+    setMyProducts(data) 
+  })  */
+  
+
+  
 
   /* const [meatItems, setMeatItem] = useState([])
   useEffect(() =>{
@@ -120,19 +142,25 @@ const Products = () => {
               </Grid>
             ))}
           </Grid>
-          <div className="pagination">
-              {
-                /* [...Array(pageCount).keys()]
-                .map(number => <Stack spacing={2}
-                className={number === page ? 'selected' : ''}
-                key={number}
-                onClick={()=> setPage(number)}
-                >
-                  <Pagination count={10} color="secondary" />
-                  </Stack> ) */
-              } 
-             
-            </div>
+          
+            <Box className="pagination">
+            {
+            [...Array(pageCount).keys()]
+            .map(number => <Button
+             key={number}
+             className={number === page ? 'selected' : ''}
+            onClick={()=> setPage(number)}>
+              {number} 
+            </Button> 
+            )
+            }
+            </Box>
+          {/* <Stack spacing={2}>
+              <Pagination key={number}
+               count={number}
+               onClick={()=> setPage(number + 1)}
+              color="secondary" />
+             </Stack> */}
         </Box>
         </>
     );
