@@ -113,7 +113,7 @@ const ProductDetails = () => {
                 <Box sx={{mt:8, display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
                         {relvantItem?.map((product) => (
                             
-                            <Card sx={{ display: 'flex', m:2, maxWidth:350 }} key={product.key} >
+                            <Card sx={{ display: 'flex', m:2, maxWidth:350 }} key={product.key} data-aos="fade-up">
                                
                                <CardActionArea onClick={()=>productChangeHandler(product._id)}>
                                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>

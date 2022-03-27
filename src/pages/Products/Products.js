@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material';
+import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Pagination, Stack, Typography } from '@mui/material';
 import axios from 'axios';
 import React, {useState, useEffect, useContext} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,27 +11,21 @@ import './Product.css'
 
 
 const Products = () => {
-  const [products, setProducts] = useState([])
+  const [myProducts, setMyProducts] = useState([])
   const [selectProduct, setSelectProduct] = useState([])
   const {state, dispatch} = useContext(Store)
   const navigate = useNavigate()
 
   //  pagination
-  const [pageCount, setPageCount] = useState(0)
-  const [page, setPage] = useState(0)
-  let size = 8;
+ 
+/*   let size = 2; */
   useEffect(()=>{
-    return() =>{
-      fetch(`https://powerful-meadow-17770.herokuapp.com/products?page=${page}&&size=${size}`)
-    .then(res => res.json())
-    .then(data =>{
-      setProducts(data)
-      const count = data?.count
-      const pageNumber = Math.ceil(count/size)
-      setPageCount(pageNumber)
+      fetch('http://localhost:5000/products')
+      .then(res => res.json())
+      .then(data =>{
+      setMyProducts(data) 
     } )
-    }
-  } ,[page])
+  } ,[])
 
   /* const [meatItems, setMeatItem] = useState([])
   useEffect(() =>{
@@ -39,21 +33,21 @@ const Products = () => {
    setMeatItem(meatItem)
   },[products]) */
 
-  const setDifferntItem = (item) =>{
+/*   const setDifferntItem = (item) =>{
     let allItems =  products.filter((meat) => meat.category === item )
     
     setSelectProduct(allItems)
   }
-
-  useEffect(()=>{
+ */
+ /*  useEffect(()=>{
     setSelectProduct(products)
-  },[products] )
+  },[selectProduct] ) */
  
 
   const addToCartHandler = async (product) =>{
     const existItem = state.cart.cartItems.find(x => x._id === product._id)
     const quantity = existItem? existItem.quantity + 1 : 1
-    const {data} = await axios.get(`https://powerful-meadow-17770.herokuapp.com/products/${product._id}`)
+    const {data} = await axios.get(`http://localhost:5000/products/${product._id}`)
     if(data.countInStock < quantity){
       window.alert('Sorry Product is out of stock');
       return
@@ -71,7 +65,7 @@ const Products = () => {
         <>
        
         <Box data-aos='zoom-out-up'>
-          <Box sx={{my:5,textAlign:'center'}}>
+         {/*  <Box sx={{my:5,textAlign:'center'}}>
        
             <Button sx={{backgroundColor:'#f7f9fc', color:"#000", fontWeight:700, m:2}} onClick={()=>setDifferntItem('Fish')}>Fish</Button>
             <Button sx={{backgroundColor:'#f7f9fc', color:"#000", fontWeight:700, m:2}} onClick={()=>setDifferntItem('Beef')}>Meat</Button>
@@ -84,18 +78,18 @@ const Products = () => {
             <Button sx={{backgroundColor:'#f7f9fc', color:"#000", fontWeight:700, m:2}} onClick={()=>setDifferntItem('Others')}>Others</Button>
           
          
-          </Box>
+          </Box> */}
             
             
             <Grid container spacing={3}
           sx={{justifyContent:'center'}}
           >
-            {selectProduct.map((product) =>(<Grid
+            {myProducts.map((product) =>(<Grid
               item
               sm={6}
               md={4}
               lg={3}
-              key={product?.name}
+              key={product?._id}
               data-aos='zoom-out-up'
               >
                 <Card >
@@ -128,15 +122,16 @@ const Products = () => {
           </Grid>
           <div className="pagination">
               {
-                [...Array(pageCount).keys()]
-                .map(number => <Button
+                /* [...Array(pageCount).keys()]
+                .map(number => <Stack spacing={2}
                 className={number === page ? 'selected' : ''}
                 key={number}
                 onClick={()=> setPage(number)}
                 >
-                  {number}
-                  </Button> )
-              }
+                  <Pagination count={10} color="secondary" />
+                  </Stack> ) */
+              } 
+             
             </div>
         </Box>
         </>

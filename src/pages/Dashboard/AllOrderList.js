@@ -140,7 +140,7 @@ const AllOrderList = () => {
         setMyBool(clickedId.shippedAt?  false : true)
       clickedId.shippedAt = myBool
       setNewConfirmId(clickedId, 1000)
-      const url =   `http://localhost:5000/orderslist/${id}`
+      const url =   `https://powerful-meadow-17770.herokuapp.com/orderslist/${id}`
       
       fetch(url, {
         method:'PUT',
@@ -169,7 +169,7 @@ const AllOrderList = () => {
         setMyBool(clickedId.deliveredAt?  false : true)
       clickedId.deliveredAt = myBool
       setNewConfirmId(clickedId, 1000)
-      const url =   `http://localhost:5000/orderslist/${id}`
+      const url =   `https://powerful-meadow-17770.herokuapp.com/orderslist/${id}`
       
       fetch(url, {
         method:'PUT',
