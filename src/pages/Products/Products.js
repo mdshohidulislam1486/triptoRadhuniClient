@@ -17,6 +17,7 @@ const Products = () => {
   const navigate = useNavigate()
   const [pageCount, setPageCount] = useState(0)
   const [page, setPage] = useState(0)
+  
 
   //  pagination
  
@@ -39,6 +40,10 @@ const Products = () => {
       isMount.current = false;
     }
   } ,[page])
+  console.log(page)
+  console.log(myProducts)
+
+
 
  /*  fetch('http://localhost:5000/products')
     .then(res => res.json())
