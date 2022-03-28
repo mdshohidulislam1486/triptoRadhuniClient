@@ -75,7 +75,7 @@ const AllOrderList = () => {
 
 
     useEffect(()=>{
-      fetch('http://localhost:5000/orderslist')
+      fetch('https://powerful-meadow-17770.herokuapp.com/orderslist')
       .then(res => res.json())
       .then(data => setOrdrsList(data))
     }, [])
@@ -111,7 +111,7 @@ const AllOrderList = () => {
       setMyBool(clickedId.confirmed?  false : true)
       clickedId.confirmed = myBool
       setNewConfirmId(clickedId, 1000)
-      const url =   `http://localhost:5000/orderslist/${id}`
+      const url =   `https://powerful-meadow-17770.herokuapp.com/orderslist/${id}`
       
       fetch(url, {
         method:'PUT',

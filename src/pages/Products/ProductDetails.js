@@ -1,5 +1,5 @@
 import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, List, ListItem, Typography } from '@mui/material';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Layout from '../Shared/Layout';
 import useStyles from '../utilities/style';
@@ -11,7 +11,7 @@ import 'aos/dist/aos.css'
 
 const ProductDetails = () => {
     const {state, dispatch} = useContext(Store)
-    const [products, setProducts] = useState([])
+    const [myProducts, setmyProducts] = useState([])
     const [newProduct, setNewProduct] = useState([])
     const [relvantItem, setRelevantItem] = useState([])
     const {_id} = useParams()
@@ -19,28 +19,36 @@ const ProductDetails = () => {
     
     
   
-    
+    const isMounted = useRef(true)
     useEffect(()=>{
       fetch('https://powerful-meadow-17770.herokuapp.com/products')
       .then(res => res.json())
-      .then(data => setProducts(data))
+      .then(data =>{
+        if(isMounted.current){
+        setmyProducts(data.products)
+        console.log(myProducts)
+        }
+      } )
+      return () => {
+        isMounted.current = false;
+      }
     } ,[])
 
-
+    
    useEffect(()=>{
-    const ourProduct = products.find((a) => a._id === _id)
-    const findRelevantItem = products.filter((x) => x?.category === ourProduct?.category)
+    const ourProduct = myProducts.find((a) => a._id === _id)
+    const findRelevantItem = myProducts.filter((x) => x?.category === ourProduct?.category)
     setRelevantItem(findRelevantItem)
     setNewProduct(ourProduct)
-   }, [products])
+   }, [myProducts])
 
 
    useEffect(()=> {
     
-   }, [products])
+   }, [myProducts])
 
    const productChangeHandler = (id) => {
-    const clickProduct = products.find((a) => a._id === id)
+    const clickProduct = myProducts.find((a) => a._id === id)
     setNewProduct(clickProduct)
     }
 
@@ -58,9 +66,11 @@ const ProductDetails = () => {
     navigate('/cart')
 
     }
+   
     useEffect(()=>{
-        AOS.init()
+            AOS.init()
     }, [])
+
     return (
         <>
           <Layout title={newProduct?.name}>
@@ -113,7 +123,7 @@ const ProductDetails = () => {
                 <Box sx={{mt:8, display:'flex', flexWrap:'wrap', justifyContent:'center'}}>
                         {relvantItem?.map((product) => (
                             
-                            <Card sx={{ display: 'flex', m:2, maxWidth:350 }} key={product.key} data-aos="fade-up">
+                            <Card sx={{ display: 'flex', m:2, maxWidth:350 }} key={product._id} data-aos="fade-up">
                                
                                <CardActionArea onClick={()=>productChangeHandler(product._id)}>
                                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>

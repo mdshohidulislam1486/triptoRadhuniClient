@@ -20,10 +20,10 @@ const Products = () => {
 
   //  pagination
  
-  let size = 5;
+  let size = 10;
   let isMount = useRef(true);
   useEffect(()=>{
-    fetch(`https://powerful-meadow-17770.herokuapp.com?page=${page}&&size=${size}`)
+    fetch(`https://powerful-meadow-17770.herokuapp.com/products?page=${page}&&size=${size}`)
     .then(res => res.json())
     .then((data) =>{
       if(isMount.current){
