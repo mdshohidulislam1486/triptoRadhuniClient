@@ -14,6 +14,7 @@ const ProductDetails = () => {
     const [myProducts, setmyProducts] = useState([])
     const [newProduct, setNewProduct] = useState([])
     const [relvantItem, setRelevantItem] = useState([])
+    const [loding, setLoding] = useState(false)
     const {_id} = useParams()
     const navigate = useNavigate()
     
@@ -28,6 +29,7 @@ const ProductDetails = () => {
         setmyProducts(data.products)
         console.log(myProducts)
         }
+        setLoding(true)
       } )
       return () => {
         isMounted.current = false;
@@ -74,6 +76,7 @@ const ProductDetails = () => {
     return (
         <>
           <Layout title={newProduct?.name}>
+              {loding ? <Typography>Loding is finished</Typography> : <Typography>It is loding now</Typography> }
             <Box className={classes.section} key={newProduct?._id}>
                 <Link style={{textDecoration:'none'}} to='/'>
                     Back to home

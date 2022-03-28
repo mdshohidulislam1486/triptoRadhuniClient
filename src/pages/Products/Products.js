@@ -20,10 +20,10 @@ const Products = () => {
 
   //  pagination
  
-  let size = 10;
+  let size = 2;
   let isMount = useRef(true);
   useEffect(()=>{
-    fetch(`https://powerful-meadow-17770.herokuapp.com/products?page=${page}&&size=${size}`)
+    fetch(`http://localhost:5000/products?page=${page}&&size=${size}`)
     .then(res => res.json())
     .then((data) =>{
       if(isMount.current){
@@ -150,7 +150,7 @@ const Products = () => {
              key={number}
              className={number === page ? 'selected' : ''}
             onClick={()=> setPage(number)}>
-              {number} 
+              {number + 1} 
             </Button> 
             )
             }
