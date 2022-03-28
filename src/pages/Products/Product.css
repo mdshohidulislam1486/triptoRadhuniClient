@@ -1,4 +1,9 @@
+
+.pagination{
+    margin-top: 2em;
+}
+
 .pagination .selected {
-    background-color: blue;
+    background-color: #208080;
     color: aliceblue;
 }

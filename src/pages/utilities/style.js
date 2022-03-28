@@ -21,8 +21,8 @@ const useStyles = makeStyles({
         alignItems:'center'
     },
     section:{
-        marginTop:'2em',
-        marginBottom:'1em',
+        marginTop:'3em',
+        marginBottom:'3em',
     },
     addProduct:{
       

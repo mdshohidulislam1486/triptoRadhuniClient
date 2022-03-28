@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Pagination, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, CircularProgress, Grid, Pagination, Stack, Typography } from '@mui/material';
 import axios from 'axios';
 import React, {useState, useEffect, useContext, useRef} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -17,28 +17,25 @@ const Products = () => {
   const navigate = useNavigate()
   const [pageCount, setPageCount] = useState(0)
   const [page, setPage] = useState(0)
+  const [isLoding, setIsLoding] = useState(false)
   
 
   //  pagination
  
-  let size = 2;
-  let isMount = useRef(true);
+  let size = 8;
+
   useEffect(()=>{
     fetch(`http://localhost:5000/products?page=${page}&&size=${size}`)
     .then(res => res.json())
     .then((data) =>{
-      if(isMount.current){
+
         setMyProducts(data.products)
         const count  = data.count
         const pageNumber = Math.ceil(count / size )
         setPageCount(pageNumber)
-      }
-        
+        setIsLoding(true)
     })
-    .catch(err => console.log(err))
-    return () => {
-      isMount.current = false;
-    }
+  
   } ,[page])
   console.log(page)
   console.log(myProducts)
@@ -108,9 +105,10 @@ const Products = () => {
           </Box> */}
             
             
-            <Grid container spacing={3}
-          sx={{justifyContent:'center'}}
-          >
+            {
+              isLoding ? <Grid container spacing={3}
+              sx={{justifyContent:'center'}}
+              >
             {myProducts.map((product) =>(<Grid
               item
               sm={6}
@@ -146,7 +144,10 @@ const Products = () => {
                 </Card>
               </Grid>
             ))}
-          </Grid>
+          </Grid> : <Box sx={{ display: 'flex', justifyContent:'center', alignItems:'center' }}>
+                           <CircularProgress color='secondary' />
+                      </Box>
+            }
           
             <Box className="pagination">
             {

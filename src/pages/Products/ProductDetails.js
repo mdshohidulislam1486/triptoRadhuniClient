@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, List, ListItem, Typography } from '@mui/material';
+import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, CircularProgress, Grid, List, ListItem, Typography } from '@mui/material';
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Layout from '../Shared/Layout';
@@ -76,19 +76,19 @@ const ProductDetails = () => {
     return (
         <>
           <Layout title={newProduct?.name}>
-              {loding ? <Typography>Loding is finished</Typography> : <Typography>It is loding now</Typography> }
             <Box className={classes.section} key={newProduct?._id}>
                 <Link style={{textDecoration:'none'}} to='/'>
                     Back to home
                 </Link>
             </Box>
-            <Grid container spacing={1} data-aos="fade-up">
-                <Grid item md={6} xs={12}>
+            {
+                loding ? <Grid container spacing={1} data-aos="fade-up">
+                <Grid item md={5} xs={12}>
                     <Box sx={{maxWidth:440, maxHeight:440}}>
                     <img src={newProduct?.image} alt={newProduct?.name} width='100%' height='100%'/>
                     </Box>
                 </Grid>
-                <Grid item md={3} xs={12}>
+                <Grid item md={4} xs={12}>
                     
                     <List>
                         <ListItem><Typography component='h1'variant='h1' >Name: {newProduct?.name}  </Typography></ListItem>
@@ -119,7 +119,10 @@ const ProductDetails = () => {
                     </List>
                     </Card>
                 </Grid>
-            </Grid>
+            </Grid> : <Box sx={{ display: 'flex', justifyContent:'center', alignItems:'center'  }}>
+                           <CircularProgress color='secondary' />
+                        </Box>
+            }
             <Typography variant='body1' color='primary'  sx={{textAlign:'center', mt:10 }}>Find more {newProduct?.category} items</Typography>
             <Box sx={{display:'flex' ,justifyContent:'center', alignItems:'center'}}>
                 
