@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, CircularProgress, Grid, Pagination, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, CircularProgress, Grid, IconButton, InputBase, Pagination, Paper, Stack, Typography } from '@mui/material';
 import axios from 'axios';
 import React, {useState, useEffect, useContext, useRef} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -6,6 +6,8 @@ import { Store } from '../utilities/Store';
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import './Product.css'
+
+import SearchIcon from '@mui/icons-material/Search';
 
 
 
@@ -25,7 +27,7 @@ const Products = () => {
   let size = 8;
 
   useEffect(()=>{
-    fetch(`http://localhost:5000/products?page=${page}&&size=${size}`)
+    fetch(`https://powerful-meadow-17770.herokuapp.com/products?page=${page}&&size=${size}`)
     .then(res => res.json())
     .then((data) =>{
 
@@ -58,7 +60,7 @@ const Products = () => {
   },[products]) */
 
   useEffect(()=>{
-    fetch(`http://localhost:5000/products`)
+    fetch(`https://powerful-meadow-17770.herokuapp.com/products`)
     .then(res => res.json())
     .then(data => setSelectProduct(data.products))
   },[myProducts])
@@ -89,12 +91,35 @@ const Products = () => {
       AOS.init()
   }, [])
 
+  const handleSearch = event =>{
+    const searchText = event.target.value
+    const matchedProducts = selectProduct.filter(search => search.name.toLowerCase().includes(searchText.toLowerCase()))
+    setMyProducts(matchedProducts)
+    console.log(matchedProducts.length)
+  }
+
   
     return (
         <>
+        <Box>
+          <Paper
+              component="form"
+              sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+            >
+              <InputBase
+                onChange={handleSearch}
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Search Google Maps"
+                inputProps={{ 'aria-label': 'search google maps' }}
+              />
+              <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
+              <SearchIcon />
+              </IconButton>
+            </Paper>
+        </Box>
        
         <Box data-aos='zoom-out-up'>
-         { <Box sx={{my:5,textAlign:'center'}}>
+          <Box sx={{my:5,textAlign:'center'}}>
        
             <Button sx={{backgroundColor:'#f7f9fc', color:"#000", fontWeight:700, m:2}} onClick={()=>setDifferntItem('Fish')}>Fish</Button>
             <Button sx={{backgroundColor:'#f7f9fc', color:"#000", fontWeight:700, m:2}} onClick={()=>setDifferntItem('Beef')}>Meat</Button>
@@ -107,7 +132,7 @@ const Products = () => {
             <Button sx={{backgroundColor:'#f7f9fc', color:"#000", fontWeight:700, m:2}} onClick={()=>setDifferntItem('Others')}>Others</Button>
           
          
-          </Box>}
+          </Box>
             
             
             {
