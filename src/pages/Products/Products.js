@@ -57,15 +57,20 @@ const Products = () => {
    setMeatItem(meatItem)
   },[products]) */
 
-/*   const setDifferntItem = (item) =>{
-    let allItems =  products.filter((meat) => meat.category === item )
-    
-    setSelectProduct(allItems)
+  useEffect(()=>{
+    fetch(`http://localhost:5000/products`)
+    .then(res => res.json())
+    .then(data => setSelectProduct(data.products))
+  },[myProducts])
+
+  const setDifferntItem = (item) =>{
+    let allItems =  selectProduct.filter((a) => a.category === item )
+    setMyProducts(allItems)
   }
- */
- /*  useEffect(()=>{
-    setSelectProduct(products)
-  },[selectProduct] ) */
+
+ useEffect(()=>{
+    setSelectProduct(myProducts)
+  },[myProducts] )
  
 
   const addToCartHandler = async (product) =>{
@@ -89,7 +94,7 @@ const Products = () => {
         <>
        
         <Box data-aos='zoom-out-up'>
-         {/*  <Box sx={{my:5,textAlign:'center'}}>
+         { <Box sx={{my:5,textAlign:'center'}}>
        
             <Button sx={{backgroundColor:'#f7f9fc', color:"#000", fontWeight:700, m:2}} onClick={()=>setDifferntItem('Fish')}>Fish</Button>
             <Button sx={{backgroundColor:'#f7f9fc', color:"#000", fontWeight:700, m:2}} onClick={()=>setDifferntItem('Beef')}>Meat</Button>
@@ -102,7 +107,7 @@ const Products = () => {
             <Button sx={{backgroundColor:'#f7f9fc', color:"#000", fontWeight:700, m:2}} onClick={()=>setDifferntItem('Others')}>Others</Button>
           
          
-          </Box> */}
+          </Box>}
             
             
             {
