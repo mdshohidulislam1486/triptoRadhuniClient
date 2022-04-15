@@ -20,6 +20,7 @@ import Payment from './pages/Payment/Payment';
 import PlaceOrder from './pages/PlaceOrder/PlaceOrder';
 import AllOrderList from './pages/Dashboard/AllOrderList';
 import NavProvider from './pages/context/NavProvider';
+import Order from './pages/PlaceOrder/Order';
 
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
             <Route path='/payment' element={<PriavateRoute><Payment/></PriavateRoute>}></Route>
             <Route path='/register' element={<Register/>} />
             <Route path='/productDetails/:_id' element={<ProductDetails />} />    
+            <Route path='/orderDetails/:_id' element={<Order />} />    
           </Routes>
          </NavProvider>
          

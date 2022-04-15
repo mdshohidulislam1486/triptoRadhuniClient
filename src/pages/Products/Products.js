@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, CircularProgress, Grid, IconButton, InputBase, Pagination, Paper, Stack, Typography } from '@mui/material';
+import { Avatar, Box, Button, Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, CircularProgress, Grid, IconButton, InputBase, Pagination, Paper, Stack, Typography } from '@mui/material';
 import axios from 'axios';
 import React, {useState, useEffect, useContext, useRef} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -8,6 +8,10 @@ import 'aos/dist/aos.css'
 import './Product.css'
 
 import SearchIcon from '@mui/icons-material/Search';
+import { red } from '@mui/material/colors';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
+import useAuth from '../hooks/useAuth'
 
 
 
@@ -20,6 +24,8 @@ const Products = () => {
   const [pageCount, setPageCount] = useState(0)
   const [page, setPage] = useState(0)
   const [isLoding, setIsLoding] = useState(false)
+  const [nodataFound, setNodataFound] = useState(false)
+  const {admin}= useAuth()
   
 
   //  pagination
@@ -38,9 +44,8 @@ const Products = () => {
         setIsLoding(true)
     })
   
-  } ,[page])
-  console.log(page)
-  console.log(myProducts)
+  } ,[page, myProducts])
+  
 
 
 
@@ -91,20 +96,30 @@ const Products = () => {
       AOS.init()
   }, [])
 
-  const handleSearch = event =>{
+  const [searchText, setSearchText] = useState(false)
+  const handleSearch = event  =>{
     const searchText = event.target.value
+    setSearchText(searchText)
+    if(!searchText){
+      setNodataFound(true)
+      return
+    }
     const matchedProducts = selectProduct.filter(search => search.name.toLowerCase().includes(searchText.toLowerCase()))
     setMyProducts(matchedProducts)
     console.log(matchedProducts.length)
   }
 
-  
+  useEffect(()=> {
+    setNodataFound(false)
+  }, [searchText])
+
+
     return (
         <>
-        <Box>
+        <Box sx={{display:'flex', justifyContent:'center'}}>
           <Paper
               component="form"
-              sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+              sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', maxWidth: 400 }}
             >
               <InputBase
                 onChange={handleSearch}
@@ -136,61 +151,74 @@ const Products = () => {
             
             
             {
-              isLoding ? <Grid container spacing={3}
-              sx={{justifyContent:'center'}}
-              >
-            {myProducts.map((product) =>(<Grid
-              item
-              sm={6}
-              md={4}
-              lg={3}
-              key={product?._id}
-              data-aos='zoom-out-up'
-              >
-                <Card >
-                <Link style={{textDecoration:"none"}} to={`productDetails/${product._id}`} >
-                  <CardActionArea>
-                    <CardMedia component='img' image= {product.image}
-                    title={product?.name}
-                    >
-                    </CardMedia>
-                    <CardContent>
-                      <Typography color='secondary'>
-                        {product?.name}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
+              nodataFound ? <Typography>Nothing is found </Typography> : <Box>
+              {
+                isLoding ? <Grid container spacing={3}
+                sx={{justifyContent:'center'}}
+                >
+              {myProducts.map((product) =>(<Grid
+                item
                 
-                  </Link>
-                  <CardActions>
-                    <Typography>
-                      ${product?.price}
-                    </Typography>
-                    <Button color='primary'
-                    onClick={() => addToCartHandler(product)}
-                    >Add to cart</Button>
-                  </CardActions>
+                key={product?._id}
+                data-aos='zoom-out-up'
+                >
+                  <Card sx={{width:205}}>
+                  {
+                    admin ? <CardHeader
+                      
+                    action={
+                      <IconButton aria-label="settings">
+                        <MoreVertIcon />
+                      </IconButton>
+                    }
+                   
+                  /> : '' 
+                  }
+                  <Link style={{textDecoration:"none"}} to={`productDetails/${product._id}`} >
+                    <CardActionArea>
+                      <CardMedia component='img' image= {product.image}
+                      title={product?.name}
+                      >
+                      </CardMedia>
+                      <CardContent>
+                        <Typography color='secondary'>
+                          {product?.name}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
                   
-                </Card>
-              </Grid>
-            ))}
-          </Grid> : <Box sx={{ display: 'flex', justifyContent:'center', alignItems:'center' }}>
-                           <CircularProgress color='secondary' />
-                      </Box>
-            }
-          
-            <Box className="pagination">
-            {
-            [...Array(pageCount).keys()]
-            .map(number => <Button
-             key={number}
-             className={number === page ? 'selected' : ''}
-            onClick={()=> setPage(number)}>
-              {number + 1} 
-            </Button> 
-            )
-            }
+                    </Link>
+                    <CardActions>
+                      <Typography>
+                        ${product?.price}
+                      </Typography>
+                      <Button color='primary'
+                      onClick={() => addToCartHandler(product)}
+                      >Add to cart</Button>
+                    </CardActions>
+                    
+                  </Card>
+                </Grid>
+              )).slice(0, 50)}
+            </Grid> : <Box sx={{ display: 'flex', justifyContent:'center', alignItems:'center' }}>
+                            <CircularProgress color='secondary' />
+                        </Box>
+              }
+            
+              <Box className="pagination">
+              {
+              [...Array(pageCount).keys()]
+              .map(number => <Button
+              key={number}
+              className={number === page ? 'selected' : ''}
+              onClick={()=> setPage(number)}>
+                {number + 1} 
+              </Button> 
+              )
+              }
+              </Box>
             </Box>
+            }
           {/* <Stack spacing={2}>
               <Pagination key={number}
                count={number}

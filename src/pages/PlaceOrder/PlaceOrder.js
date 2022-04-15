@@ -3,7 +3,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useSnackbar } from 'notistack';
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import Layout from '../Shared/Layout';
 import CheckOutWizard from '../utilities/CheckOutWizard';
@@ -16,6 +16,7 @@ const PlaceOrder = () => {
     const navigate = useNavigate()
     const {state, dispatch} = useContext(Store)
     const  { cart: {cartItems, shippingAddress, paymentMethod}} = state;
+    const {id} = useParams()
 
     const classes = useStyles()
     const round2 = num => Math.round(num*100 + Number.EPSILON) /100; 
@@ -52,9 +53,9 @@ const PlaceOrder = () => {
             )
             dispatch({type:'CART_CLEAR'});
             Cookies.remove('cartItems');
-            setLoading(false)
-            navigate(`/order/${data?._id}`)
-            console.log(data._id)
+            setLoading(true)
+            navigate(`/orderDetails/${data?.insertedId}`)
+            console.log(data)
         }catch(err){
           setLoading(false)
           enqueueSnackbar(getError(err), {variant:'error'})  
@@ -182,7 +183,8 @@ const PlaceOrder = () => {
                                 </Grid>
                             </ListItem> 
                             <ListItem>
-                                <Button onClick={placeOrderHandler} fullWidth variant='contained' color='primary'> Place Order</Button>
+                                <Link  to={`productDetails/${id}`}></Link>
+                                <Button onClick={placeOrderHandler}  fullWidth variant='contained' color='primary'> Place Order</Button>
                             </ListItem>
                             {loading  && <ListItem>
                                 <CircularProgress></CircularProgress>
