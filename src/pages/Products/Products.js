@@ -44,7 +44,7 @@ const Products = () => {
         setIsLoding(true)
     })
   
-  } ,[page, myProducts])
+  } ,[page])
   
 
 
@@ -124,7 +124,7 @@ const Products = () => {
               <InputBase
                 onChange={handleSearch}
                 sx={{ ml: 1, flex: 1 }}
-                placeholder="Search Google Maps"
+                placeholder="Search product"
                 inputProps={{ 'aria-label': 'search google maps' }}
               />
               <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
